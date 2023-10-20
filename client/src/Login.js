@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { UserContext } from './context/user'
 
 function Login() {
+    const { login } = useContext(UserContext)
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const [errorList, setErrorList] = useState("")
@@ -21,6 +23,7 @@ function Login() {
             .then(r => r.json())
             .then(user => {
                 console.log(user)
+                login(user)
             })
         }
     }

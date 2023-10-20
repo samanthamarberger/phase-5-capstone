@@ -5,6 +5,7 @@ Rails.application.routes.draw do
 
   # get '/client_me', to: 'clients#show'
   post '/client_login', to: 'sessions#client_create'
-  
+  delete '/logout', to: 'sessions#destroy'
+
   get "*path", to: "fallback#index", constraints: ->(req) { !req.xhr? && req.format.html? }
 end
