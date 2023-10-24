@@ -2,9 +2,9 @@ import React, { useContext } from "react";
 import { UserContext } from "./context/user";
 
 function Home() {
-    const { user, loggedIn } = useContext(UserContext)
+    const { user, clientLoggedIn, trainerLoggedIn } = useContext(UserContext)
 
-    if (loggedIn) {
+    if (clientLoggedIn) {
         return (
             <div className="Home">
                 <h1>{user.name}'s Home Page</h1>
@@ -12,6 +12,14 @@ function Home() {
             </div>
         )
     }
+    else if (trainerLoggedIn) {
+        return (
+            <div className="Home">
+                <h1>Trainer {user.name}'s Home Page</h1>
+                <p>Welcome to Find Your Fit! As a fitness coach be sure to keep up on messages from clients and keep your location up to date!  </p>
+            </div>
+        )
+    } 
     else {
         return (
             <div className="Home">

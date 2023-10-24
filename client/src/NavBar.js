@@ -3,7 +3,7 @@ import { UserContext } from "./context/user";
 import { NavLink, useNavigate } from "react-router-dom";
 
 function NavBar() {
-    const{ logout, loggedIn } = useContext(UserContext)
+    const{ logout, clientLoggedIn, trainerLoggedIn } = useContext(UserContext)
     const navigate = useNavigate()
 
     const logoutUser = () => {
@@ -17,7 +17,7 @@ function NavBar() {
         })
     }
 
-    if (loggedIn) {
+    if (clientLoggedIn || trainerLoggedIn) {
         return (
             <header>
                 <button onClick={logoutUser}>Logout</button>

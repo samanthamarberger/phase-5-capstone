@@ -4,19 +4,25 @@ const UserContext = React.createContext();
 
 function UserProvider({ children }){
     const [user, setUser] = useState({})
-    const [loggedIn, setLoggedIn] = useState(false)
+    const [clientLoggedIn, setClientLoggedIn] = useState(false)
+    const [trainerLoggedIn, setTrainerLoggedIn] = useState(false)
 
-    const login = (userData) => {
+    const clientLogin = (userData) => {
         setUser(userData)
-        setLoggedIn(true)
+        setClientLoggedIn(true)
+    }
+    const trainerLogin = (userData) => {
+        setUser(userData)
+        setTrainerLoggedIn(true)
     }
     const logout = () => {
         setUser({})
-        setLoggedIn(false)
+        setClientLoggedIn(false)
+        setTrainerLoggedIn(false)
     }
 
     return (
-        <UserContext.Provider value={{ user, loggedIn, login, logout}}>
+        <UserContext.Provider value={{ user, clientLoggedIn, trainerLoggedIn, clientLogin, trainerLogin, logout}}>
             {children}
         </UserContext.Provider>
     )
