@@ -24,13 +24,16 @@ function Login() {
             })
             .then(r => r.json())
             .then(user => {
-                if (!user.error) {
+                if (!user.errors) {
                     clientLogin(user)
                     navigate(`/`)
+                    setErrorList(null)
                 }
                 else {
                     setUsername("")
                     setPassword("")
+                    const errorLis = user.errors.map((e, index) => <li key={index} style={{ color: 'red' }}>{e}</li>)
+                    setErrorList(errorLis)
                 }
             })
         }
@@ -45,14 +48,16 @@ function Login() {
             })
             .then(r => r.json())
             .then(user => {
-                if (!user.error) {
-                    console.log(user)
+                if (!user.errors) {
                     trainerLogin(user)
                     navigate(`/`)
+                    setErrorList(null)
                 }
                 else {
                     setUsername("")
                     setPassword("")
+                    const errorLis = user.errors.map((e, index) => <li key={index} style={{ color: 'red' }}>{e}</li>)
+                    setErrorList(errorLis)
                 }
             })
         }
