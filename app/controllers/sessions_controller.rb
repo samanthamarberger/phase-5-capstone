@@ -1,17 +1,23 @@
 class SessionsController < ApplicationController
-    skip_before_action :authorize, only: [:client_create]
+    skip_before_action :authorize, only: [:client_create, :trainer_create]
 
     def client_create 
-        puts "Recieved request: #{params.inspect}"
         client = Client.find_by(username: params[:username])
-        puts "Found client: #{client.inspect}"
         if client&.authenticate(params[:password])
-            puts "Authentication successful"
             session[:id] = client.id 
             render json: client, status: :created
         else 
-            puts "Authentication failed"
-            render json: { errors: ["Invalid username or password", "Are you logging in as a client or trainer?"] }, status: :unauthorized
+            render json: { errors: ["Invalid username or password", "Are you a trainer?"] }, status: :unauthorized
+        end
+    end
+
+    def trainer_create 
+        trainer = Trainer.find_by(username: params[:username])
+        if trainer&.authenticate(params[:password])
+            session[:id] = trainer.id
+            render json: trainer, status: :created
+        else
+            render json: { errors: ["Invalid username or password", "Are you a client?"] }, status: :unauthorized
         end
     end
 

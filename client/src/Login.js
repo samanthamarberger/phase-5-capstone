@@ -34,6 +34,28 @@ function Login() {
                 }
             })
         }
+        if (trainerChecked) {
+            fetch('/trainer_login', {
+                method: "POST",
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    username: username,
+                    password: password
+                })
+            })
+            .then(r => r.json())
+            .then(user => {
+                if (!user.error) {
+                    console.log(user)
+                    login(user)
+                    navigate(`/`)
+                }
+                else {
+                    setUsername("")
+                    setPassword("")
+                }
+            })
+        }
     }
 
     const handleClientCheck = () => {
