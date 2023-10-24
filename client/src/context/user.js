@@ -21,6 +21,31 @@ function UserProvider({ children }){
         setTrainerLoggedIn(false)
     }
 
+    useEffect(() => {
+        fetch('/client_me')
+            .then(r => r.json())
+            .then((userData) => {
+                if (!userData.error) {
+                    setUser(userData)
+                    setClientLoggedIn(true)
+                }
+                else {
+                    fetch ('/trainer_me')
+                    .then(r => r.json())
+                    .then((userData) => {
+                        setUser(userData)
+                        setTrainerLoggedIn(true)
+                    })
+                    .catch((error) => {
+                        console.error(error)
+                    })
+                }
+            })
+            .catch((error) => {
+                console.error(error)
+            })
+    }, [])
+
     return (
         <UserContext.Provider value={{ user, clientLoggedIn, trainerLoggedIn, clientLogin, trainerLogin, logout}}>
             {children}
