@@ -1,5 +1,6 @@
-class ClientSerializer < ActiveModel::serializer 
-    attributes :id, :username, :email, :birthday, :image, :goals
+class ClientSerializer < ActiveModel::Serializer 
+    attributes :id, :username, :name, :email, :birthday, :image, :goals
 
+    has_many :appointments
     has_many :trainers 
 end

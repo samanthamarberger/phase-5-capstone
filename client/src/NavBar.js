@@ -21,6 +21,9 @@ function NavBar() {
         return (
             <header>
                 <button onClick={logoutUser}>Logout</button>
+                <NavLink to='/'>
+                    <button>Home</button>
+                </NavLink>
             </header>
         )
     }
