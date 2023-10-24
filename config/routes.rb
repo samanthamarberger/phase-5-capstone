@@ -7,6 +7,8 @@ Rails.application.routes.draw do
   post '/client_login', to: 'sessions#client_create'
   post 'trainer_login', to: 'sessions#trainer_create'
   delete '/logout', to: 'sessions#destroy'
+  get '/client_me', to: 'clients#show'
+  get '/trainer_me', to: 'trainers#show'
 
   get "*path", to: "fallback#index", constraints: ->(req) { !req.xhr? && req.format.html? }
 end
