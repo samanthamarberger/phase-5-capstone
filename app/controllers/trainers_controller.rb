@@ -1,8 +1,8 @@
-class ClientsController < ApplicationController
+class TrainersController < ApplicationController
 
     def show
-        user = Client.find_by(id: session[:id])
-        if session[:role] == "Client"
+        user = Trainer.find_by(id: session[:id])
+        if session[:role] == "Trainer"
             render json: user, status: :ok
         else
             render json: { error: "Not Authorized" }, status: :unauthorized

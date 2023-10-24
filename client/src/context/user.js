@@ -25,7 +25,8 @@ function UserProvider({ children }){
         fetch('/client_me')
             .then(r => r.json())
             .then((userData) => {
-                if (!userData.error && userData.status === "Client") {
+                if (!userData.error) {
+                    console.log(userData)
                     setUser(userData)
                     setClientLoggedIn(true)
                 }
@@ -33,7 +34,7 @@ function UserProvider({ children }){
                     fetch ('/trainer_me')
                     .then(r => r.json())
                     .then((userData) => {
-                        if (!userData.error && userData.status === "Trainer") {
+                        if (!userData.error) {
                             setUser(userData)
                             setTrainerLoggedIn(true)
                         }
