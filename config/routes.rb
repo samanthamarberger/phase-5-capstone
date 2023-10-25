@@ -10,5 +10,7 @@ Rails.application.routes.draw do
   get '/client_me', to: 'clients#show'
   get '/trainer_me', to: 'trainers#show'
 
+  resources :specialities, only: [:index] 
+
   get "*path", to: "fallback#index", constraints: ->(req) { !req.xhr? && req.format.html? }
 end
