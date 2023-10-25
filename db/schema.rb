@@ -40,6 +40,8 @@ ActiveRecord::Schema.define(version: 2023_10_20_221815) do
 
   create_table "specialities", force: :cascade do |t|
     t.string "name"
+    t.string "picture"
+    t.string "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
