@@ -1,6 +1,10 @@
 class SpecialitiesController < ApplicationController
     def index 
         specialities = Speciality.all
-        render json: specialities, status: :ok
+        if specialities
+            render json: specialities, status: :ok
+        else
+            render jon: { error: ["Not authorized"]}, status: :unauthorized
+        end
     end
 end

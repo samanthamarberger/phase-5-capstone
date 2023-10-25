@@ -24,6 +24,13 @@ function NavBar() {
                 <NavLink to='/'>
                     <button>Home</button>
                 </NavLink>
+                {clientLoggedIn ? 
+                    <NavLink to='/specialities'>
+                        <button>Personal Training Options</button>
+                    </NavLink> 
+                : 
+                    null
+                }
             </header>
         )
     }
