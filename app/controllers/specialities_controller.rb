@@ -1,4 +1,6 @@
 class SpecialitiesController < ApplicationController
+    skip_before_action :authorize, only: [:view_only]
+
     def index 
         specialities = Speciality.all
         if specialities
@@ -6,5 +8,10 @@ class SpecialitiesController < ApplicationController
         else
             render jon: { error: ["Not authorized"]}, status: :unauthorized
         end
+    end
+
+    def view_only
+        specialities = Speciality.pluck(:name)
+        render json: specialities, status: :ok
     end
 end

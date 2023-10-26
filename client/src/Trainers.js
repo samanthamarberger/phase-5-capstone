@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { UserContext } from "./context/user";
 import Trainer from "./Trainer";
 import { useParams } from "react-router-dom";
@@ -6,24 +6,18 @@ import { useParams } from "react-router-dom";
 function Trainers() {
     const params = useParams();
     const { specialities, clientLoggedIn } = useContext(UserContext)
-    const [ speciality, setSpeciality] = useState([]);
-
-    useEffect(() => {
-        const loadedSpeciality = specialities.find((sp) => sp.id === parseInt(params.id));
-        setSpeciality(loadedSpeciality)
-    }, [specialities, params.id])
     
-    console.log(speciality)
-
+    const speciality = specialities.find((sp) => sp.id === parseInt(params.id));
     if (!speciality) {
         return (
             <div className="Trainers">
                 <p>Loading...</p>
             </div>
-        );
+        )
     }
+    console.log(speciality)
     
-    const trainers = speciality.trainers.map((trainer) => <Trainer key={trainer.name} trainer={trainer} />);
+    const trainers = speciality.trainers.map((trainer) => <Trainer key={trainer.name} trainer={trainer} />)
     
     if (clientLoggedIn) {
         return (

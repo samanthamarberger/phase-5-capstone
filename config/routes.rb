@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   delete '/logout', to: 'sessions#destroy'
   get '/client_me', to: 'clients#show'
   get '/trainer_me', to: 'trainers#show'
+  get 'speciality_names', to: 'specialities#view_only'
 
   resources :specialities, only: [:index] 
 
