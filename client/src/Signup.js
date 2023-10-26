@@ -1,6 +1,7 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { UserContext } from './context/user'
+import CustomSelect from './CustomSelect'
 
 function Signup() {
     const { clientSignup, trainerSignup } = useContext(UserContext)
@@ -12,8 +13,21 @@ function Signup() {
     const [clientChecked, setClientChecked] = useState(false)
     const [trainerChecked, setTrainterChecked] = useState(false)
     const [errorList, setErrorList] = useState([])
+    const [viewSpeciality, setViewSpeciality] = useState([])
+    const [selectedOption, setSelectedOption] = useState();
     const navigate = useNavigate()
 
+    useEffect(() => {
+        fetch('/speciality_names')
+            .then(r => r.json())
+            .then((data) => {
+                setViewSpeciality(data)
+            })
+    }, [])
+
+    const handleSelectChange = (e) => {
+        setSelectedOption(e.target.value);
+    };
 
     const handleClientCheck = () => {
         setClientChecked(!clientChecked)
@@ -39,19 +53,19 @@ function Signup() {
                     password_confirmation: passwordConfirmation
                 })
             })
-            .then(r => r.json())
-            .then(client => {
-                if (!client.errors) {
-                    clientSignup(client)
-                    navigate('/')
-                }
-                else {
-                    setPassword("")
-                    setPasswordConfirmation("")
-                    const errorLis = client.errors.map((e, index) => <li key={index} style={{ color: 'red' }}>{e}</li>)
-                    setErrorList(errorLis)
-                }
-            })
+                .then(r => r.json())
+                .then(client => {
+                    if (!client.errors) {
+                        clientSignup(client)
+                        navigate('/')
+                    }
+                    else {
+                        setPassword("")
+                        setPasswordConfirmation("")
+                        const errorLis = client.errors.map((e, index) => <li key={index} style={{ color: 'red' }}>{e}</li>)
+                        setErrorList(errorLis)
+                    }
+                })
         }
         else if (trainerChecked) {
             fetch('/trainer_signup', {
@@ -65,20 +79,20 @@ function Signup() {
                     password_confirmation: passwordConfirmation
                 })
             })
-            .then(r => r.json())
-            .then(trainer => {
-                console.log(trainer)
-                if (!trainer.errors) {
-                    trainerSignup(trainer)
-                    navigate('/')
-                }
-                else {
-                    setPassword("")
-                    setPasswordConfirmation("")
-                    const errorLis = trainer.errors.map((e, index) => <li key={index} style={{ color: 'red' }}>{e}</li>)
-                    setErrorList(errorLis)
-                }
-            })
+                .then(r => r.json())
+                .then(trainer => {
+                    console.log(trainer)
+                    if (!trainer.errors) {
+                        trainerSignup(trainer)
+                        navigate('/')
+                    }
+                    else {
+                        setPassword("")
+                        setPasswordConfirmation("")
+                        const errorLis = trainer.errors.map((e, index) => <li key={index} style={{ color: 'red' }}>{e}</li>)
+                        setErrorList(errorLis)
+                    }
+                })
         }
         else {
             setErrorList(<li style={{ color: 'red' }}>Please check if you are a client or trainer</li>)
@@ -139,6 +153,13 @@ function Signup() {
                     value={passwordConfirmation}
                     onChange={(e) => setPasswordConfirmation(e.target.value)}
                 /><br />
+                {trainerChecked && (
+                    <CustomSelect
+                        value={selectedOption}
+                        options={viewSpeciality}
+                        onChange={handleSelectChange}
+                    />
+                )}
                 <input type="submit" />
             </form>
             <ul>

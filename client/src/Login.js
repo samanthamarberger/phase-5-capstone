@@ -97,7 +97,7 @@ function Login() {
                             checked={clientChecked}
                             onChange={handleClientCheck}
                         />
-                    </label>
+                    </label> <br/>
                     <label>
                         Trainer:
                         <input 
