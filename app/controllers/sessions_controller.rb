@@ -5,7 +5,7 @@ class SessionsController < ApplicationController
         client = Client.find_by(username: params[:username])
         if client&.authenticate(params[:password])
             session[:id] = client.id 
-            session[:role] = "Client"
+            session[:role] = client.status
             render json: client, status: :created
         else 
             render json: { errors: ["Invalid username or password", "Are you a trainer?"] }, status: :unauthorized
@@ -16,7 +16,7 @@ class SessionsController < ApplicationController
         trainer = Trainer.find_by(username: params[:username])
         if trainer&.authenticate(params[:password])
             session[:id] = trainer.id
-            session[:role] = "Trainer"
+            session[:role] = trainer.status
             render json: trainer, status: :created
         else
             render json: { errors: ["Invalid username or password", "Are you a client?"] }, status: :unauthorized
