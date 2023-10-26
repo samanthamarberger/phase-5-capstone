@@ -9,7 +9,4 @@ class Client < ApplicationRecord
     validates :name, presence: true
     validates :password, presence: true, if: :password_required?
 
-    def password_required?
-        password.present? || password_confirmation.present?
-    end
 end

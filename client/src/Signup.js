@@ -53,6 +53,33 @@ function Signup() {
                 }
             })
         }
+        else if (trainerChecked) {
+            fetch('/trainer_signup', {
+                method: "POST",
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    username: username,
+                    name: name,
+                    email: email,
+                    password: password,
+                    password_confirmation: passwordConfirmation
+                })
+            })
+            .then(r => r.json())
+            .then(trainer => {
+                console.log(trainer)
+                if (!trainer.errors) {
+                    trainerSignup(trainer)
+                    navigate('/')
+                }
+                else {
+                    setPassword("")
+                    setPasswordConfirmation("")
+                    const errorLis = trainer.errors.map((e, index) => <li key={index} style={{ color: 'red' }}>{e}</li>)
+                    setErrorList(errorLis)
+                }
+            })
+        }
         else {
             setErrorList(<li style={{ color: 'red' }}>Please check if you are a client or trainer</li>)
         }
