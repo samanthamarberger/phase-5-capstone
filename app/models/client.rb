@@ -6,6 +6,7 @@ class Client < ApplicationRecord
     has_many :trainers, through: :appointments
 
     validates :username, :email, presence: true, uniqueness: true
+    validates :name, presence: true
     validates :password, presence: true, if: :password_required?
 
     def password_required?

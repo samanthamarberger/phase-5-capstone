@@ -1,5 +1,6 @@
 class ClientsController < ApplicationController
-
+    skip_before_action :authorize, only: [:create]
+    
     def show
         client = Client.find_by(id: session[:id])
         if session[:role] == "Client"
@@ -23,6 +24,6 @@ class ClientsController < ApplicationController
     private
 
     def client_params
-        params.permit(:username, :email, :password, :password_confirmation)
+        params.permit(:username, :name, :email, :password, :password_confirmation)
     end
 end

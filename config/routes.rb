@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   # get '/client_me', to: 'clients#show'
   post '/client_login', to: 'sessions#client_create'
   post 'trainer_login', to: 'sessions#trainer_create'
+  post '/client_signup', to: 'clients#create'
+  post '/trainer_signup', to: 'trainers#create'
   delete '/logout', to: 'sessions#destroy'
   get '/client_me', to: 'clients#show'
   get '/trainer_me', to: 'trainers#show'
