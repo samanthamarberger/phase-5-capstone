@@ -1,18 +1,22 @@
 import React from 'react';
 
 function CustomSelect({ value, options, onChange }) {
-    console.log(options)
+    const objectOptions = options.map((option) => {
+        return {
+            id: option[0],
+            name: option[1],
+        }
+    })
   return (
     <div>
       <label>Select a speciality: </label>
       <select value={value} onChange={onChange}>
-        {options.map((option) => (
-          <option key={option} value={option}>
-            {option}
+        {objectOptions.map((option) => (
+          <option key={option.id} value={option.id}>
+            {option.name}
           </option>
         ))}
       </select>
-      <p>Selected Option: {value}</p>
     </div>
   )
 }

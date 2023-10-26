@@ -11,7 +11,7 @@ class SpecialitiesController < ApplicationController
     end
 
     def view_only
-        specialities = Speciality.pluck(:name)
+        specialities = Speciality.pluck(:id, :name)
         render json: specialities, status: :ok
     end
 end

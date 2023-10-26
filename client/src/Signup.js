@@ -10,11 +10,11 @@ function Signup() {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [passwordConfirmation, setPasswordConfirmation] = useState("")
+    const [speciality, setSpeciality] = useState("")
     const [clientChecked, setClientChecked] = useState(false)
     const [trainerChecked, setTrainterChecked] = useState(false)
     const [errorList, setErrorList] = useState([])
     const [viewSpeciality, setViewSpeciality] = useState([])
-    const [selectedOption, setSelectedOption] = useState();
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -24,10 +24,6 @@ function Signup() {
                 setViewSpeciality(data)
             })
     }, [])
-
-    const handleSelectChange = (e) => {
-        setSelectedOption(e.target.value);
-    };
 
     const handleClientCheck = () => {
         setClientChecked(!clientChecked)
@@ -76,7 +72,8 @@ function Signup() {
                     name: name,
                     email: email,
                     password: password,
-                    password_confirmation: passwordConfirmation
+                    password_confirmation: passwordConfirmation,
+                    speciality_id: speciality
                 })
             })
                 .then(r => r.json())
@@ -155,9 +152,9 @@ function Signup() {
                 /><br />
                 {trainerChecked && (
                     <CustomSelect
-                        value={selectedOption}
+                        value={speciality}
                         options={viewSpeciality}
-                        onChange={handleSelectChange}
+                        onChange={(e) => setSpeciality(e.target.value)}
                     />
                 )}
                 <input type="submit" />
