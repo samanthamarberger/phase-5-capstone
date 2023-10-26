@@ -7,6 +7,7 @@ import NavBar from './NavBar';
 import Home from './Home';
 import Specialities from './Specialities';
 import Trainers from './Trainers';
+import Signup from './Signup';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Routes>
           <Route exact path='/login' element={<Login />}/>
           <Route exact path='/' element={<Home />} />
+          <Route exact path='/signup' element={<Signup />}/>
           <Route exact path='/specialities' element={<Specialities />} />
           <Route exact path='specialities/:id' element={<Trainers />} />
         </Routes>

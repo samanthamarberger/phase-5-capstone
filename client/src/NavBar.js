@@ -40,6 +40,12 @@ function NavBar() {
                 <NavLink to='/login'>
                     <button>Login</button>
                 </NavLink>
+                <NavLink to='/signup'>
+                    <button>Signup</button>
+                </NavLink>
+                <NavLink to='/'>
+                    <button>Home</button>
+                </NavLink>
             </header>
         )
     }

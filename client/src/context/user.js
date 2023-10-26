@@ -8,6 +8,18 @@ function UserProvider({ children }){
     const [trainerLoggedIn, setTrainerLoggedIn] = useState(false)
     const [specialities, setSpecialities] = useState([])
 
+    const clientSignup = (userData) => {
+        setUser(userData)
+        fetchSpecialities()
+        setClientLoggedIn(true)
+    }
+
+    const trainerSignup = (userData) => {
+        setUser(userData)
+        fetchSpecialities()
+        setTrainerLoggedIn(true)
+    }
+
     const clientLogin = (userData) => {
         setUser(userData)
         setClientLoggedIn(true)
@@ -64,7 +76,7 @@ function UserProvider({ children }){
     }
 
     return (
-        <UserContext.Provider value={{ user, clientLoggedIn, trainerLoggedIn, clientLogin, trainerLogin, logout, specialities}}>
+        <UserContext.Provider value={{ user, clientLoggedIn, trainerLoggedIn, clientLogin, trainerLogin, clientSignup, trainerSignup, logout, specialities}}>
             {children}
         </UserContext.Provider>
     )
