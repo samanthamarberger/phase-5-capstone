@@ -9,7 +9,7 @@ function SpecialityLink({ speciality }) {
             <img src={speciality.picture} alt={speciality.name}/>
             <p>{speciality.description}</p>
             <Link className="link-name" to={`/specialities/${speciality.id}`}>
-                See the instructors and book an appointment!
+                Check out our instructors!
             </Link>
         </div>
     )

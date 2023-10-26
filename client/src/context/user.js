@@ -27,7 +27,6 @@ function UserProvider({ children }){
             .then(r => r.json())
             .then((userData) => {
                 if (!userData.error) {
-                    console.log(userData)
                     setUser(userData)
                     setClientLoggedIn(true)
                     fetchSpecialities()
