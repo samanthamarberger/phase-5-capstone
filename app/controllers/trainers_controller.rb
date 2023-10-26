@@ -1,4 +1,5 @@
 class TrainersController < ApplicationController
+    skip_before_action :authorize, only: [:create]
 
     def show
         user = Trainer.find_by(id: session[:id])
@@ -7,5 +8,22 @@ class TrainersController < ApplicationController
         else
             render json: { error: "Not Authorized" }, status: :unauthorized
         end
+    end
+
+    def create
+        trainer = Trainer.create(trainer_params)
+        if trainer.valid?
+            session[:id] = trainer.id
+            session[:role] = trainer.status
+            render json: trainer, status: :created
+        else 
+            render json: { errors: trainer.errors.full_messages }, status: :unprocessable_entity
+        end 
+    end
+
+    private
+
+    def trainer_params
+        params.permit(:username, :name, :email, :password, :password_confirmation)
     end
 end
