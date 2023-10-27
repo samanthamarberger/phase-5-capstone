@@ -31,6 +31,9 @@ function NavBar() {
                 : 
                     null
                 }
+                <NavLink to='/profile'>
+                    <button>Profile</button>
+                </NavLink>
             </header>
         )
     }
