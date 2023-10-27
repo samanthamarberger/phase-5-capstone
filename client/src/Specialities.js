@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { UserContext } from "./context/user";
 import SpecialityLink from "./SpecialityLink";
 
+
 function Specialities() {
     const { specialities, clientLoggedIn } = useContext(UserContext)
 
