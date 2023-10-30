@@ -7,7 +7,13 @@ function Specialities() {
     const { specialities, clientLoggedIn } = useContext(UserContext)
 
     if (clientLoggedIn) {
-        const specialityList = specialities.map(speciality => <SpecialityLink key={speciality.id} speciality={speciality} />)
+        const specialityList = specialities.map((speciality, index) => {
+            if (index !== 0) {
+              return <SpecialityLink key={speciality.id} speciality={speciality} />
+            }
+            return null
+          })
+          
         return (
             <div className="Specialities">
                 <h1>Personal Training Options: </h1>
