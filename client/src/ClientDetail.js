@@ -5,7 +5,7 @@ function ClientDetail() {
     const { user } = useContext(UserContext)
     return (
         <div className="Profile">
-            <p>{user.goals}</p>
+            <p>Current Goal: {user.goals}</p>
         </div>
     )
 }

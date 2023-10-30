@@ -15,5 +15,7 @@ Rails.application.routes.draw do
 
   resources :specialities, only: [:index] 
 
+  resources :clients, only: [:update]
+
   get "*path", to: "fallback#index", constraints: ->(req) { !req.xhr? && req.format.html? }
 end

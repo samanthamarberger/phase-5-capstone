@@ -5,7 +5,7 @@ function TrainerDetail() {
     const { user } = useContext(UserContext)
     return (
         <div className="Profile">
-            <p>{user.bio}</p>
+            <p>My Bio: {user.bio}</p>
         </div>
     )
 }
