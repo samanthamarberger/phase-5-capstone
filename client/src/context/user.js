@@ -7,6 +7,7 @@ function UserProvider({ children }){
     const [clientLoggedIn, setClientLoggedIn] = useState(false)
     const [trainerLoggedIn, setTrainerLoggedIn] = useState(false)
     const [specialities, setSpecialities] = useState([])
+    const [errorList, setErrorList] = useState([])
 
     const clientSignup = (userData) => {
         setUser(userData)
@@ -75,8 +76,44 @@ function UserProvider({ children }){
             })
     }
 
+    function clientUpdate( tempUsername, tempName, tempEmail, tempBirthday, tempGoals, tempImage ){
+        fetch ('/client_me', {
+            method: "PATCH",
+            body: JSON.stringify({
+                username: tempUsername,
+                name: tempName,
+                email: tempEmail,
+                birthday: tempBirthday,
+                goals: tempGoals,
+                image: tempImage
+            }),
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+        .then((r) => r.json())
+        .then((profile) => {
+            if (!profile.errors) {
+                setUser((prevUser) => ({
+                    ...prevUser, 
+                    username: profile.username,
+                    name: profile.name,
+                    email: profile.email,
+                    birthday: profile.birthday,
+                    goals: profile.goals,
+                    image: profile.image,
+                  }))
+                setErrorList(null)
+            }
+            else {
+                const errors = profile.errors.map((e, index) => <li key={index} style={{ color: 'red' }}>{e}</li>)
+                setErrorList(errors)
+            }
+        }) 
+    }
+
     return (
-        <UserContext.Provider value={{ user, clientLoggedIn, trainerLoggedIn, clientLogin, trainerLogin, clientSignup, trainerSignup, logout, specialities}}>
+        <UserContext.Provider value={{ user, clientLoggedIn, trainerLoggedIn, clientLogin, trainerLogin, clientSignup, trainerSignup, logout, specialities, clientUpdate, errorList}}>
             {children}
         </UserContext.Provider>
     )

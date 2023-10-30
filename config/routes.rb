@@ -11,11 +11,10 @@ Rails.application.routes.draw do
   delete '/logout', to: 'sessions#destroy'
   get '/client_me', to: 'clients#show'
   get '/trainer_me', to: 'trainers#show'
-  get 'speciality_names', to: 'specialities#view_only'
+  patch '/client_me', to: 'clients#update'
+  get '/speciality_names', to: 'specialities#view_only'
 
   resources :specialities, only: [:index] 
-
-  resources :clients, only: [:update]
 
   get "*path", to: "fallback#index", constraints: ->(req) { !req.xhr? && req.format.html? }
 end
