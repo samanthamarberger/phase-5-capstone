@@ -78,17 +78,10 @@ function UserProvider({ children }){
             })
     }
 
-    function clientUpdate( tempUsername, tempName, tempEmail, tempBirthday, tempGoals, tempImage ){
+    function clientUpdate( client ){
         fetch ('/client_me', {
             method: "PATCH",
-            body: JSON.stringify({
-                username: tempUsername,
-                name: tempName,
-                email: tempEmail,
-                birthday: tempBirthday,
-                goals: tempGoals,
-                image: tempImage
-            }),
+            body: JSON.stringify(client),
             headers: {
                 "Content-Type": "application/json",
             },
@@ -113,9 +106,33 @@ function UserProvider({ children }){
             }
         }) 
     }
+    function addSpeciality( speciality ) {
+        fetch ('/specialities', {
+            method: 'POST',
+            body: JSON.stringify(speciality),
+            headers: { 
+                'Content-Type': 'application/json',
+            },
+        })
+        .then(r => r.json())
+        .then(speciality => {
+            if (!speciality.errors) {
+                setSpecialities([...specialities, speciality])
+                setUser((prevUser) => ({
+                    ...prevUser,
+                    speciality_id: speciality.id
+                }))
+                setErrorList(null)
+            }
+            else {
+                const errorLis = speciality.errors.map((e, index) => <li key={index} style={{ color: 'red' }}>{e}</li>)
+                setErrorList(errorLis)
+            }
+        })
+    }
 
     return (
-        <UserContext.Provider value={{ user, clientLoggedIn, trainerLoggedIn, clientLogin, trainerLogin, clientSignup, trainerSignup, logout, specialities, clientUpdate, errorList}}>
+        <UserContext.Provider value={{ user, clientLoggedIn, trainerLoggedIn, clientLogin, trainerLogin, clientSignup, trainerSignup, logout, specialities, addSpeciality, clientUpdate, errorList}}>
             {children}
         </UserContext.Provider>
     )

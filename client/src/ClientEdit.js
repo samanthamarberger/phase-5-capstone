@@ -12,7 +12,14 @@ function ClientEdit({ setEditForm }) {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        clientUpdate(tempUsername, tempName, tempEmail, tempBirthday, tempGoals, tempImage)
+        clientUpdate({
+            username: tempUsername, 
+            name: tempName,
+            email: tempEmail,
+            birthday: tempBirthday,
+            goals: tempGoals,
+            image: tempImage
+        })
         setEditForm(false)
         setTempUsername("")
         setTempName("")

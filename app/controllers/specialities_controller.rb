@@ -14,4 +14,19 @@ class SpecialitiesController < ApplicationController
         specialities = Speciality.pluck(:id, :name)
         render json: specialities, status: :ok
     end
+
+    def create
+        speciality = Speciality.create(speciality_params)
+        if speciality.valid? 
+            render json: speciality, status: :created
+        else 
+            render json: { errors: speciality.errors.full_messages }, status: :unprocessable_entity
+        end
+    end
+
+    private
+
+    def speciality_params
+        params.permit(:name, :picture, :description)
+    end
 end

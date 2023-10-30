@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   patch '/client_me', to: 'clients#update'
   get '/speciality_names', to: 'specialities#view_only'
 
-  resources :specialities, only: [:index] 
+  resources :specialities, only: [:index, :create] 
 
   get "*path", to: "fallback#index", constraints: ->(req) { !req.xhr? && req.format.html? }
 end

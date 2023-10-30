@@ -50,8 +50,13 @@ function Login() {
             .then(user => {
                 if (!user.errors) {
                     trainerLogin(user)
-                    navigate(`/`)
                     setErrorList(null)
+                    if(user.speciality_id === 1) {
+                        navigate(`/profile`)
+                    }   
+                    else {
+                        navigate ('/')
+                    }   
                 }
                 else {
                     setUsername("")
