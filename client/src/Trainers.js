@@ -26,12 +26,8 @@ function Trainers() {
             </div>
         )
     }
-
-    console.log(speciality)
     
     const trainers = speciality.trainers.map((trainer) => <Trainer key={trainer.name} trainer={trainer} />)
-
-    console.log(trainers)
     
     if (clientLoggedIn) {
         return (

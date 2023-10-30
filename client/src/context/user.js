@@ -23,10 +23,12 @@ function UserProvider({ children }){
 
     const clientLogin = (userData) => {
         setUser(userData)
+        fetchSpecialities()
         setClientLoggedIn(true)
     }
     const trainerLogin = (userData) => {
         setUser(userData)
+        fetchSpecialities()
         setTrainerLoggedIn(true)
     }
     const logout = () => {

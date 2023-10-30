@@ -26,8 +26,8 @@ function Login() {
             .then(user => {
                 if (!user.errors) {
                     clientLogin(user)
-                    navigate(`/`)
                     setErrorList(null)
+                    navigate(`/`)
                 }
                 else {
                     setUsername("")

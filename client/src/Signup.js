@@ -53,7 +53,7 @@ function Signup() {
                 .then(client => {
                     if (!client.errors) {
                         clientSignup(client)
-                        navigate('/')
+                        navigate('/profile')
                     }
                     else {
                         setPassword("")
@@ -78,10 +78,9 @@ function Signup() {
             })
                 .then(r => r.json())
                 .then(trainer => {
-                    console.log(trainer)
                     if (!trainer.errors) {
                         trainerSignup(trainer)
-                        navigate('/')
+                        navigate('/profile')
                     }
                     else {
                         setPassword("")
