@@ -43,7 +43,7 @@ function SpecialityAdd({ setAddForm }) {
                         value={tempDescription}
                         onChange={(e) => setTempDescription(e.target.value)}
                     /> <br/>
-                    <button type="submit">Submit</button>
+                    <button type="submit" >Submit</button>
             </form>
         </div>
     )

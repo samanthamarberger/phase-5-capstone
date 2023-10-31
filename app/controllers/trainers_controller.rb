@@ -21,9 +21,24 @@ class TrainersController < ApplicationController
         end 
     end
 
+    def add_speciality
+        trainer = Trainer.find_by(id: session[id])
+        trainer.update(add_speciality_params)
+        if trainer.valid?
+            render json: trainer, status: :updated
+        else
+            render json: { errors: trainer.errors.full_messages }, status: :unprocessable_entity
+        end
+    end
+
+
     private
 
     def trainer_params
         params.permit(:username, :name, :email, :speciality_id, :password, :password_confirmation)
+    end
+
+    def add_speciality_params
+        params.permit(:speciality_id)
     end
 end

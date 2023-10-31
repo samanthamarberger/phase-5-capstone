@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   get '/trainer_me', to: 'trainers#show'
   patch '/client_me', to: 'clients#update'
   get '/speciality_names', to: 'specialities#view_only'
+  patch '/add_speciality_to_trainer', to: 'trainers#add_speciality'
 
   resources :specialities, only: [:index, :create] 
 

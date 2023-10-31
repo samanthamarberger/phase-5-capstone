@@ -131,6 +131,31 @@ function UserProvider({ children }){
         })
     }
 
+    // function addSpecialityToTrainer ( speciality ) {
+    //     fetch ('/add_speciality_to_trainer', {
+    //         method: 'PATCH',
+    //         body: JSON.stringify(speciality),
+    //         headers: {
+    //             'Content-Type': 'application/json'
+    //         },
+    //     })
+    //     .then(r => r.json())
+    //     .then(speciality => {
+    //         if (!speciality.errors) {
+    //             setSpecialities([...specialities, speciality])
+    //             setUser((prevUser) => ({
+    //                 ...prevUser,
+    //                 speciality_id: speciality.id
+    //             }))
+    //             setErrorList(null)
+    //         }
+    //         else {
+    //             const errorLis = speciality.errors.map((e, index) => <li key={index} style={{ color: 'red' }}>{e}</li>)
+    //             setErrorList(errorLis)
+    //         }
+    //     })
+    // }
+
     return (
         <UserContext.Provider value={{ user, clientLoggedIn, trainerLoggedIn, clientLogin, trainerLogin, clientSignup, trainerSignup, logout, specialities, addSpeciality, clientUpdate, errorList}}>
             {children}
