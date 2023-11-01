@@ -37,6 +37,10 @@ function UserProvider({ children }){
         setTrainerLoggedIn(false)
     }
 
+    function isUserInvalid(user) {
+        return user.speciality_id === 1 || user.image === null || user.bio === null || user.location === null;
+      }
+
     useEffect(() => {
         fetch('/client_me')
             .then(r => r.json())
@@ -106,6 +110,36 @@ function UserProvider({ children }){
             }
         }) 
     }
+    function trainerUpdate( trainer ) {
+        fetch ('/trainer_me', {
+            method: "PATCH",
+            body: JSON.stringify(trainer),
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+        .then((r) => r.json())
+        .then((profile) => {
+            console.log(profile)
+            if (!profile.errors) {
+                setUser((prevUser) => ({
+                    ...prevUser, 
+                    username: profile.username,
+                    name: profile.name,
+                    email: profile.email,
+                    image: profile.image,
+                    bio: profile.bio,
+                    speciality_id: profile.speciality_id,
+                    location: profile.location
+                  }))
+                setErrorList(null)
+            }
+            else {
+                const errors = profile.errors.map((e, index) => <li key={index} style={{ color: 'red' }}>{e}</li>)
+                setErrorList(errors)
+            }
+        }) 
+    }
     function addSpeciality( speciality ) {
         fetch ('/specialities', {
             method: 'POST',
@@ -131,33 +165,8 @@ function UserProvider({ children }){
         })
     }
 
-    // function addSpecialityToTrainer ( speciality ) {
-    //     fetch ('/add_speciality_to_trainer', {
-    //         method: 'PATCH',
-    //         body: JSON.stringify(speciality),
-    //         headers: {
-    //             'Content-Type': 'application/json'
-    //         },
-    //     })
-    //     .then(r => r.json())
-    //     .then(speciality => {
-    //         if (!speciality.errors) {
-    //             setSpecialities([...specialities, speciality])
-    //             setUser((prevUser) => ({
-    //                 ...prevUser,
-    //                 speciality_id: speciality.id
-    //             }))
-    //             setErrorList(null)
-    //         }
-    //         else {
-    //             const errorLis = speciality.errors.map((e, index) => <li key={index} style={{ color: 'red' }}>{e}</li>)
-    //             setErrorList(errorLis)
-    //         }
-    //     })
-    // }
-
     return (
-        <UserContext.Provider value={{ user, clientLoggedIn, trainerLoggedIn, clientLogin, trainerLogin, clientSignup, trainerSignup, logout, specialities, addSpeciality, clientUpdate, errorList}}>
+        <UserContext.Provider value={{ user, clientLoggedIn, trainerLoggedIn, clientLogin, trainerLogin, clientSignup, trainerSignup, logout, specialities, addSpeciality, clientUpdate, trainerUpdate, errorList, isUserInvalid}}>
             {children}
         </UserContext.Provider>
     )

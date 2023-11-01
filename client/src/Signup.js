@@ -80,7 +80,12 @@ function Signup() {
                 .then(trainer => {
                     if (!trainer.errors) {
                         trainerSignup(trainer)
-                        navigate('/profile')
+                        if (trainer.speciality_id !== 1){
+                            navigate('/profile')
+                        }
+                        else {
+                            navigate('/specialities/new')
+                        }
                     }
                     else {
                         setPassword("")

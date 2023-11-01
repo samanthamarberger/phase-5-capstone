@@ -9,6 +9,8 @@ import Specialities from './Specialities';
 import Trainers from './Trainers';
 import Signup from './Signup';
 import Profile from './Profile';
+import SpecialityAdd from './SpecialityAdd';
+import Appointments from './Appointments';
 
 function App() {
   return (
@@ -20,8 +22,10 @@ function App() {
           <Route exact path='/' element={<Home />} />
           <Route exact path='/signup' element={<Signup />}/>
           <Route exact path='/specialities' element={<Specialities />} />
-          <Route exact path='specialities/:id' element={<Trainers />} />
+          <Route exact path='/specialities/:id' element={<Trainers />} />
           <Route exact path='/profile' element={<Profile />}/>
+          <Route exact path='/specialities/new' element={<SpecialityAdd />} />
+          <Route exact path='appointments' element={<Appointments />} />
         </Routes>
       </UserProvider>
     </div>

@@ -3,7 +3,7 @@ import { UserContext } from "./context/user";
 import TrainerEdit from "./TrainerEdit";
 
 function TrainerDetail() {
-    const { user } = useContext(UserContext)
+    const { user, isUserInvalid } = useContext(UserContext)
     const [editForm, setEditForm] = useState(false)
 
     function canEdit() {
@@ -15,22 +15,23 @@ function TrainerDetail() {
         }
     }
 
-    if (user.speciality_id === 1) {
+    console.log(user)
+    if (isUserInvalid(user)) {
         return (
             <div className="profile">
-                <h2 style={{ color: 'red' }}>Please add your speciality or select from our list</h2>
+                <h2 style={{ color: 'red' }}>Please finish your profile</h2>
                 <p style={{ color: 'red' }}>You will not be seen by potential clients until you have a speciality and your profile is complete.</p>
                 {canEdit()}
             </div>
         )
     }
-    else {
-        return (
-            <div className="Profile">
-                <p>My Bio: {user.bio}</p>
-            </div>
-        )
-    }
+    return (
+        <div className="Profile">
+            <p>My Bio: {user.bio}</p>
+            {canEdit()}
+        </div>
+    )
+
 }
 
 export default TrainerDetail

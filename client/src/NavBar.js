@@ -34,6 +34,10 @@ function NavBar() {
                 <NavLink to='/profile'>
                     <button>Profile</button>
                 </NavLink>
+                <NavLink to='/appointments'>
+                    <button>My Appointments</button>
+                </NavLink>
+
             </header>
         )
     }

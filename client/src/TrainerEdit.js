@@ -1,9 +1,8 @@
 import React, { useContext, useState } from "react";
 import { UserContext } from "./context/user";
-import SpecialityAdd from "./SpecialityAdd";
 
 function TrainerEdit({ setEditForm }) {
-    const { user, specialities } = useContext(UserContext)
+    const { user, specialities, trainerUpdate } = useContext(UserContext)
     const [tempUsername, setTempUsername] = useState(user.username)
     const [tempName, setTempName] = useState(user.name)
     const [tempEmail, setTempEmail] = useState(user.email)
@@ -11,25 +10,10 @@ function TrainerEdit({ setEditForm }) {
     const [tempBio, setTempBio] = useState(user.bio)
     const [tempSpeciality, setTempSpeciality] = useState(user.speciality_id)
     const [tempLocation, setTempLocation] = useState(user.location)
-    const [addForm, setAddForm] = useState(false)
-
-    function canAdd() {
-        if (addForm) {
-            return <SpecialityAdd setAddForm={setAddForm} setTempSpeciality={setTempSpeciality} />
-        }
-        else {
-            return (
-                <button onClick={(e) => {
-                    e.preventDefault()
-                    setAddForm(true)
-                }}>Add a speciality</button>
-            )
-        }
-    }
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        console.log({
+        trainerUpdate({
             username: tempUsername,
             name: tempName,
             email: tempEmail,
@@ -77,39 +61,32 @@ function TrainerEdit({ setEditForm }) {
                 <input
                     type="text"
                     id="image"
-                    value={tempImage}
+                    value={tempImage || ' '}
                     onChange={(e) => setTempImage(e.target.value)}
                 /> <br />
                 <label>Change Bio:</label>
                 <input
                     type="text"
                     id="bio"
-                    value={tempBio}
+                    value={tempBio || ' '}
                     onChange={(e) => setTempBio(e.target.value)}
                 /> <br />
                 <label>Change Location:</label>
                 <input
                     type="text"
                     id="location"
-                    value={tempLocation}
+                    value={tempLocation || ' '}
                     onChange={(e) => setTempLocation(e.target.value)}
                 /> <br />
-
-                {!setAddForm ? null :
-                (<div>
-                    <label>Select a speciality: </label>
-                    <select value={tempSpeciality} onChange={(e) => setTempSpeciality(e.target.value)}>
-                        <option value={""}>Select an option</option>
-                        {specialities.map((s) => (
-                            <option key={s.id} value={s.id}>
-                                {s.name}
-                            </option>
-                        ))}
-                    </select>
-                </div>
-                )}
-                <h4>or</h4>
-                {canAdd()} 
+                <label>Select a speciality: </label>
+                <select value={tempSpeciality || ' '} onChange={(e) => setTempSpeciality(e.target.value)}>
+                    <option value=' '>Select an option</option>
+                    {specialities.map((s) => (
+                        <option key={s.id} value={s.id}>
+                            {s.name}
+                        </option>
+                    ))}
+                </select>
                 <br />
                 <button type="submit">Submit</button>
             </form>

@@ -1,12 +1,14 @@
 import React, { useContext, useState } from "react";
+import { useNavigate } from 'react-router-dom'
 import { UserContext } from "./context/user";
 
-function SpecialityAdd({ setAddForm }) {
+function SpecialityAdd() {
 
     const { addSpeciality } = useContext(UserContext)
     const [tempName, setTempName] = useState('')
     const [tempPicture, setTempPicture] = useState('')
     const [tempDescription, setTempDescription] = useState('')
+    const navigate = useNavigate()
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -15,13 +17,13 @@ function SpecialityAdd({ setAddForm }) {
             picture: tempPicture,
             description: tempDescription
         })
-        setAddForm(false)
+        navigate('/profile')
     }
 
     return (
         <div>
             <form onSubmit={handleSubmit}>
-                <h2>Add a speciality</h2>
+            <h2 style={{ color: 'red' }}>Please add your speciality</h2>
                 <label>Your Speciality:</label>
                     <input 
                         type="text"

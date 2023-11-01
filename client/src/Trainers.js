@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 function Trainers() {
     const params = useParams()
     const [showContent, setShowContent] = useState(false)
-    const { specialities, clientLoggedIn } = useContext(UserContext)
+    const { specialities, clientLoggedIn, isUserInvalid } = useContext(UserContext)
     
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -27,8 +27,9 @@ function Trainers() {
         )
     }
     
-    const trainers = speciality.trainers.map((trainer) => <Trainer key={trainer.name} trainer={trainer} />)
-    
+    const filteredTrainers = speciality.trainers.filter((trainer) => !isUserInvalid(trainer))
+    const trainers = filteredTrainers.map((trainer) => <Trainer key={trainer.name} trainer={trainer} />)
+
     if (clientLoggedIn) {
         return (
             <div className="Trainers">
