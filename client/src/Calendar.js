@@ -1,28 +1,11 @@
-import React, { useContext, useEffect, useState } from "react";
-import { UserContext } from "./context/user";
+import React from "react";
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 
 
-function Calendar() {
-
-    const { user, clientLoggedIn } = useContext(UserContext)
-    const [appointments, setAppointments] = useState([])
-    console.log(user.appointments)
-
-    useEffect(() => {
-        const events = user.appointments.map(a => ({
-            title: clientLoggedIn 
-                ? `My ${a.title} appointment with ${a.trainer_name}` 
-                : `Appointment with ${a.client_name}`,
-            start: a.start,
-            end: a.end,
-        }))
-        console.log(events)
-        setAppointments(events)
-    }, [user.appointments])
+function Calendar({ events }) {
 
     return (
         <div className="Calendar">
@@ -35,7 +18,7 @@ function Calendar() {
             }}
             plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
             timeZone='local'
-            events={appointments}
+            events={events}
             editable={true}
             selectable={true}
             // select={handleDateSelect}
