@@ -8,7 +8,7 @@
 
 
 # Seed data for Specialities
-Speciality.create(name: 'Other', picture: 'https://wallpapers.com/images/hd/blank-blue-hue-yxck4rgjiuc51con.jpg', description: '', )
+Speciality.create(name: 'Other', picture: 'https://wallpapers.com/images/hd/blank-blue-hue-yxck4rgjiuc51con.jpg', description: ' ', )
 Speciality.create(name: 'Speed Training', picture: 'https://simplifaster.com/wp-content/uploads/2017/10/Male-Sprinter-Block-Start.jpg', description: 'Speed Training involves the increase in muscle power through both speed, technical guidance and increased range of motion. As athletes enter each stage of Speed Training, the exercises and drills become easier with greater explosive force behind each repetition.')
 Speciality.create(name: 'Weightlifting', picture: 'https://www.powerhouse-fitness.co.uk/blog/wp-content/uploads/2020/12/Blog_olympic_weightlifting-7.jpg', description: 'Weightlifting is an athletic discipline which requires lifting of heavy weights in a progressive manner. It not only tests the physical prowess of an individual but also his/her rate of force generation, i.e., ballistic actions of lifting the weights in minimum amount of time.')
 Speciality.create(name: 'Boxing', picture: 'https://www.shape.com/thmb/juZ1SfooOdjIq6zvXgmsoYRp8Rc=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/boxing-8fa6221ec7ad4a80ba1e730eb9d1c507.jpg', description: 'Boxing is a combat sport and a martial art in which two people, usually wearing protective gloves and other protective equipment such as hand wraps and mouthguards, throw punches at each other for a predetermined amount of time in a boxing ring.')
@@ -24,5 +24,17 @@ Trainer.create(username: 'trainer1', name: 'Mike', password: 'password3', email:
 Trainer.create(username: 'trainer2', name: 'Hannah', password: 'password4', email: "hannah@gmail.com", image: 'https://img.redbull.com/images/c_limit,w_1500,h_1000,f_auto,q_auto/redbullcom/2018/06/08/19c9192c-24d3-40ac-984a-cf0385d9bb65/morghan-king-three-time-champion', bio: "I have been lifting weights for 10 years now and I love it.", speciality_id: 3, location: '710 S Utah Valley Dr, American Fork, UT 84003')
 
 # Seed data for Appointments
-Appointment.create(client_id: 1, trainer_id: 1, date: '2023-10-25', time: '10:00:00', duration: '01:00:00')
-Appointment.create(client_id: 2, trainer_id: 2, date: '2023-10-26', time: '15:30:00', duration: '01:30:00')
+Appointment.create(
+    client_id: 1, 
+    trainer_id: 1, 
+    date: '2023-11-01', 
+    start: Time.zone.local(2023, 11, 2, 15, 30, 0), 
+    end: Time.zone.local(2023, 11, 2, 17, 0, 0)
+)
+Appointment.create(
+    client_id: 2, 
+    trainer_id: 2, 
+    date: '2023-11-02', 
+    start: Time.zone.local(2023, 11, 1, 10, 0, 0),
+    end: Time.zone.local(2023, 11, 1, 11, 0, 0)
+)

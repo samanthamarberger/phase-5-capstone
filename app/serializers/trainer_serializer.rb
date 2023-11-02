@@ -3,7 +3,7 @@ class TrainerSerializer < ActiveModel::Serializer
 
 
     def speciality 
-        Speciality.find(object.speciality_id)
+        Speciality.find(object.speciality_id).name
     end
 
     has_many :appointments

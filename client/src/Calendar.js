@@ -8,15 +8,17 @@ import interactionPlugin from '@fullcalendar/interaction';
 
 function Calendar() {
 
-    const { user } = useContext(UserContext)
+    const { user, clientLoggedIn } = useContext(UserContext)
     const [appointments, setAppointments] = useState([])
-    // console.log(user.appointments)
+    console.log(user.appointments)
 
     useEffect(() => {
         const events = user.appointments.map(a => ({
-            title: `My ${a.title} appointment with ${a.trainer_name}`,
-            start: `${a.date}T${a.start}`,
-            end: `${a.date}T${a.end}`,
+            title: clientLoggedIn 
+                ? `My ${a.title} appointment with ${a.trainer_name}` 
+                : `Appointment with ${a.client_name}`,
+            start: a.start,
+            end: a.end,
         }))
         console.log(events)
         setAppointments(events)
@@ -32,6 +34,7 @@ function Calendar() {
                 right: "dayGridMonth,timeGridWeek,timeGridDay"
             }}
             plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+            timeZone='local'
             events={appointments}
             editable={true}
             selectable={true}

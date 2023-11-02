@@ -19,8 +19,8 @@ ActiveRecord::Schema.define(version: 2023_10_20_221815) do
     t.integer "client_id"
     t.integer "trainer_id"
     t.date "date"
-    t.time "time"
-    t.time "duration"
+    t.datetime "start"
+    t.datetime "end"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
