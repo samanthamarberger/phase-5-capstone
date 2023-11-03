@@ -165,8 +165,30 @@ function UserProvider({ children }){
         })
     }
 
+    function addAppointment( appointment ) {
+        fetch ('/appointments', {
+            method: 'POST',
+            body: JSON.stringify(appointment),
+            headers: { 
+                'Content-Type': 'application/json',
+            }, 
+        })
+        .then(r => r.json())
+        .then(appointment => {
+            if (!appointment.errors) {
+                const updatedUserAppointments = [...user.appointments, appointment]
+                setUser({...user, appointments: updatedUserAppointments})
+                setErrorList(null)
+            }
+            else  {
+                const errorLis = appointment.errors.map((e, index) => <li key={index} style={{ color: 'red' }}>{e}</li>)
+                setErrorList(errorLis)
+            }
+        })
+    }
+
     return (
-        <UserContext.Provider value={{ user, clientLoggedIn, trainerLoggedIn, clientLogin, trainerLogin, clientSignup, trainerSignup, logout, specialities, addSpeciality, clientUpdate, trainerUpdate, errorList, isUserInvalid}}>
+        <UserContext.Provider value={{ user, clientLoggedIn, trainerLoggedIn, clientLogin, trainerLogin, clientSignup, trainerSignup, logout, specialities, addSpeciality, clientUpdate, trainerUpdate, addAppointment, errorList, isUserInvalid}}>
             {children}
         </UserContext.Provider>
     )

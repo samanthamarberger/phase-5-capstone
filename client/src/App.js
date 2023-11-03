@@ -25,7 +25,7 @@ function App() {
           <Route exact path='/specialities/:id' element={<Trainers />} />
           <Route exact path='/profile' element={<Profile />}/>
           <Route exact path='/specialities/new' element={<SpecialityAdd />} />
-          <Route exact path='appointments' element={<Appointments />} />
+          <Route exact path='/appointments' element={<Appointments />} />
         </Routes>
       </UserProvider>
     </div>

@@ -5,12 +5,12 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 
 
-function Calendar({ events }) {
+function Calendar({ events, eventClick }) {
 
     return (
         <div className="Calendar">
             <FullCalendar 
-            initialView='dayGridMonth'
+            initialView='timeGridWeek'
             headerToolbar={{
                 left: "prev,next,today",
                 center: "title",
@@ -19,9 +19,10 @@ function Calendar({ events }) {
             plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
             timeZone='local'
             events={events}
-            editable={true}
+            // editable={true}
             selectable={true}
             // select={handleDateSelect}
+            eventClick={eventClick}
             />
         </div>
     )

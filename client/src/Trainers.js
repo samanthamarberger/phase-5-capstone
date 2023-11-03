@@ -3,6 +3,7 @@ import { UserContext } from "./context/user";
 import Trainer from "./Trainer";
 import { useParams } from "react-router-dom";
 
+
 function Trainers() {
     const params = useParams()
     const [showContent, setShowContent] = useState(false)
@@ -26,7 +27,7 @@ function Trainers() {
             </div>
         )
     }
-    
+
     const filteredTrainers = speciality.trainers.filter((trainer) => !isUserInvalid(trainer))
     const trainers = filteredTrainers.map((trainer) => <Trainer key={trainer.name} trainer={trainer} />)
 
