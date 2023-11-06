@@ -187,6 +187,24 @@ function UserProvider({ children }){
         })
     }
 
+    // function deleteAvailability(id) {
+    //     fetch (`/availabilities/${id}`, {
+    //         method: "DELETE",
+    //     })
+    //         .then(availability => {
+    //             const updatedAvailability = 
+    //         })
+    //         .catch((error) => {
+    //             console.error("Error removing availability:", error)
+    //         })
+    // }
+
+    // function frontEndDelete(id) {
+    //     const updatedTrails = trails.filter((trail) => trail.id !== id)
+    //     setTrails(updatedTrails)
+    //     navigate('/')
+    // }
+
     return (
         <UserContext.Provider value={{ user, clientLoggedIn, trainerLoggedIn, clientLogin, trainerLogin, clientSignup, trainerSignup, logout, specialities, addSpeciality, clientUpdate, trainerUpdate, addAppointment, errorList, isUserInvalid}}>
             {children}

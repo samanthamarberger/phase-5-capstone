@@ -79,7 +79,7 @@ function Trainer({ trainer }) {
 
     const handleAddAppointment = () => {
         addAppointment({
-            trainerId: selectedAppointment.trainer_id,
+            trainer_id: selectedAppointment.trainer_id,
             start: selectedAppointment.start,
             end: selectedAppointment.end,
         })
@@ -87,7 +87,7 @@ function Trainer({ trainer }) {
         navigate('/appointments')
     }
 
-
+    console.log("user apts:", user.appointments)
     return (
         <div>
             <h2>{trainer.name}</h2>

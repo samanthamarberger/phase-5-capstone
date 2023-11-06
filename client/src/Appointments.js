@@ -6,8 +6,6 @@ function Appointments() {
     const { user, clientLoggedIn, trainerLoggedIn } = useContext(UserContext)
     const [appointments, setAppointments] = useState([])
 
-    console.log(user.appointments)
-
     useEffect(() => {
         if (user.appointments) {
             const appointments = user.appointments.map(a => ({
