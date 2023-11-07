@@ -1,8 +1,10 @@
-function Dialog({ message, onDialog }) {
+import React from "react";
+
+function Dialog({ message, onDialog, onCancel}) {
 
     const handleDialogClick = (e) => {
         e.stopPropagation();
-      }
+    }
     return (
         <div 
             className='dialog-container'
@@ -25,7 +27,7 @@ function Dialog({ message, onDialog }) {
                         Yes
                     </button>
                     <button 
-                    onClick={()=>onDialog(false)}
+                    onClick={()=>onCancel()}
                         style={{
                             background:"green", 
                             color:"white", 

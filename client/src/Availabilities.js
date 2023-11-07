@@ -3,13 +3,16 @@ import { UserContext } from "./context/user";
 import Calendar from "./Calendar";
 import moment from 'moment';
 import Dialog from "./Dialog";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
-function Availabilities({ trainer, handleButtonClick }) {
-    const { user, addAppointment, errorList } = useContext(UserContext)
+function Availabilities({ trainer, handleButtonClick, specialities }) {
+    const { user, addAppointment, deleteAvailability, errorList } = useContext(UserContext)
+    const navigate = useNavigate()
+    const params = useParams();
+    console.log(specialities)
+    const speciality = specialities.find((sp) => (sp.id === parseInt(params.id)))
     const [availabilities, setAvailabilities] = useState([])
     const [selectedAppointment, setSelectedAppointment] = useState('')
-    const navigate = useNavigate()
     const [dialog, setDialog] = useState({
         message: '',
         isLoading: false,
@@ -53,6 +56,7 @@ function Availabilities({ trainer, handleButtonClick }) {
         }
     }
 
+    console.log(trainer.availabilities)
     useEffect(() => {
         if (trainer && trainer.availabilities) {
             const events = trainer.availabilities.map(a => ({
@@ -62,6 +66,7 @@ function Availabilities({ trainer, handleButtonClick }) {
                 color: 'green',
                 client_id: user.id,
                 trainer_id: trainer.id,
+                availability_id: a.id,
             }))
             setAvailabilities(events)
         }
@@ -72,6 +77,7 @@ function Availabilities({ trainer, handleButtonClick }) {
             start: clickInfo.event.start,
             end: clickInfo.event.end,
             trainer_id: clickInfo.event.extendedProps.trainer_id,
+            availability_id: clickInfo.event.extendedProps.availability_id,
         })
         handleDialog(
             `Would you like to scheldule an appointment with ${trainer.name} from ${clickInfo.event.start} to ${clickInfo.event.end}?`,
@@ -85,10 +91,14 @@ function Availabilities({ trainer, handleButtonClick }) {
             start: selectedAppointment.start,
             end: selectedAppointment.end,
         })
+        deleteAvailability(trainer.id, selectedAppointment.availability_id, speciality.id)
         handleCloseDialog()
         navigate('/appointments')
     }
-    console.log(trainer)
+    
+    const handleCancel =()=> {
+        handleCloseDialog()
+    }
 
     return (
         <div>
@@ -99,6 +109,7 @@ function Availabilities({ trainer, handleButtonClick }) {
                 <Dialog
                     message={dialog.message}
                     onDialog={handleAddAppointment}
+                    onCancel={handleCancel}
                 />
             )}
         </div>

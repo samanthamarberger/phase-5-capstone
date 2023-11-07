@@ -10,7 +10,7 @@ function Calendar({ events, eventClick }) {
     return (
         <div className="Calendar">
             <FullCalendar 
-            initialView='timeGridWeek'
+            initialView='dayGridMonth'
             headerToolbar={{
                 left: "prev,next,today",
                 center: "title",
