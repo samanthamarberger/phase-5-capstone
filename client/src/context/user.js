@@ -203,7 +203,6 @@ function UserProvider({ children }) {
     }
 
     function frontEndDeleteAvailability(trainerId, availabilityId, specialityId) {
-        const updatedAvailability = availabilities.filter((availability) => availability.id !== availabilityId)
         setSpecialities((prevSpecialities) => {
             return prevSpecialities.map((speciality) => {
                 if (speciality.id === specialityId) {
@@ -212,11 +211,12 @@ function UserProvider({ children }) {
                         ...speciality,
                         trainers: speciality.trainers.map((trainer) => {
                             if (trainer.id === trainerId) {
-                                console.log("trainer:", trainer)
-                                console.log("updated availability:", updatedAvailability)
+                                const updatedAvailabilities = trainer.availabilities.filter(
+                                    (availability) => availability.id !== availabilityId
+                                )
                                 return {
                                     ...trainer,
-                                    availabilities: updatedAvailability,
+                                    availabilities: updatedAvailabilities,
                                 }
                             }
                             return trainer

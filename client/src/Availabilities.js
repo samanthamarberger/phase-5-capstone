@@ -5,35 +5,15 @@ import moment from 'moment';
 import Dialog from "./Dialog";
 import { useNavigate, useParams } from "react-router-dom";
 
-function Availabilities({ trainer, handleButtonClick, specialities }) {
-    const { user, addAppointment, deleteAvailability, errorList } = useContext(UserContext)
+function Availabilities({ trainer, handleButtonClick }) {
+    const { user, addAppointment, deleteAvailability, errorList, specialities } = useContext(UserContext)
     const navigate = useNavigate()
-    const params = useParams();
-    console.log(specialities)
+    const params = useParams()
     const speciality = specialities.find((sp) => (sp.id === parseInt(params.id)))
     const [availabilities, setAvailabilities] = useState([])
     const [selectedAppointment, setSelectedAppointment] = useState('')
-    const [dialog, setDialog] = useState({
-        message: '',
-        isLoading: false,
-        show: false,
-    })
-
-    const handleDialog = (message, isLoading) => {
-        setDialog({
-            message,
-            isLoading,
-            show: true,
-        })
-    }
-
-    const handleCloseDialog = () => {
-        setDialog({
-            message: '',
-            isLoading: false,
-            show: false,
-        })
-    }
+    const [dialogVisible, setDialogVisible] = useState(false)
+    const [dialogMessage, setDialogMessage] = useState("")
 
     function calculateDuration(start, end) {
         const startMoment = moment(start);
@@ -56,7 +36,6 @@ function Availabilities({ trainer, handleButtonClick, specialities }) {
         }
     }
 
-    console.log(trainer.availabilities)
     useEffect(() => {
         if (trainer && trainer.availabilities) {
             const events = trainer.availabilities.map(a => ({
@@ -79,10 +58,8 @@ function Availabilities({ trainer, handleButtonClick, specialities }) {
             trainer_id: clickInfo.event.extendedProps.trainer_id,
             availability_id: clickInfo.event.extendedProps.availability_id,
         })
-        handleDialog(
-            `Would you like to scheldule an appointment with ${trainer.name} from ${clickInfo.event.start} to ${clickInfo.event.end}?`,
-            false
-        )
+        setDialogMessage(`Would you like to scheldule an appointment with ${trainer.name} from ${clickInfo.event.start} to ${clickInfo.event.end}?`)
+        setDialogVisible(true)
     }
 
     const handleAddAppointment = () => {
@@ -92,12 +69,12 @@ function Availabilities({ trainer, handleButtonClick, specialities }) {
             end: selectedAppointment.end,
         })
         deleteAvailability(trainer.id, selectedAppointment.availability_id, speciality.id)
-        handleCloseDialog()
+        setDialogVisible(false)
         navigate('/appointments')
     }
-    
+
     const handleCancel =()=> {
-        handleCloseDialog()
+        setDialogVisible(false)
     }
 
     return (
@@ -105,9 +82,9 @@ function Availabilities({ trainer, handleButtonClick, specialities }) {
             <Calendar events={availabilities} eventClick={handleSchelduleAppointment} />
             <button className="trainer-link" onClick={handleButtonClick}>Close</button>
             {errorList}
-            {dialog.show && (
+            {dialogVisible && (
                 <Dialog
-                    message={dialog.message}
+                    message={dialogMessage}
                     onDialog={handleAddAppointment}
                     onCancel={handleCancel}
                 />

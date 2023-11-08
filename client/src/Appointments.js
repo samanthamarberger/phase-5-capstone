@@ -1,10 +1,12 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { UserContext } from "./context/user";
 import Calendar from './Calendar';
+import AppointmentCard from './AppointmentCard';
 
 function Appointments() {
     const { user, clientLoggedIn, trainerLoggedIn } = useContext(UserContext)
     const [appointments, setAppointments] = useState([])
+    const [selectedAppointment, setSelectedAppointment] = useState(null)
 
     useEffect(() => {
         if (user.appointments) {
@@ -19,11 +21,16 @@ function Appointments() {
         }
     }, [user.appointments, clientLoggedIn])
 
+    const handleAppointmentClick = (clickInfo) => {
+        setSelectedAppointment(clickInfo.event)
+    }
+
     if(clientLoggedIn || trainerLoggedIn) {
         return (
             <div>
                 <p>{user.name}'s appointments</p>
-                <Calendar events={appointments}/>
+                {selectedAppointment && <AppointmentCard appointment={selectedAppointment} />}
+                <Calendar events={appointments} eventClick={handleAppointmentClick}/>
             </div>
         )
     }
