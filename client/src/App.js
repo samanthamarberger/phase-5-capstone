@@ -11,6 +11,7 @@ import Signup from './Signup';
 import Profile from './Profile';
 import SpecialityAdd from './SpecialityAdd';
 import Appointments from './Appointments';
+import TrainerAvailabilities from './TrainerAvailabilities';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <Route exact path='/profile' element={<Profile />}/>
           <Route exact path='/specialities/new' element={<SpecialityAdd />} />
           <Route exact path='/appointments' element={<Appointments />} />
+          <Route exact path='/availabilities' element={<TrainerAvailabilities />} />
         </Routes>
       </UserProvider>
     </div>

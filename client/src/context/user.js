@@ -8,7 +8,7 @@ function UserProvider({ children }) {
     const [trainerLoggedIn, setTrainerLoggedIn] = useState(false)
     const [specialities, setSpecialities] = useState([])
     const [errorList, setErrorList] = useState([])
-    const [availabilities, setAvailabilities] = useState([])
+    // const [availabilities, setAvailabilities] = useState([])
 
     const clientSignup = (userData) => {
         setUser(userData)
@@ -50,7 +50,7 @@ function UserProvider({ children }) {
                     setUser(userData)
                     setClientLoggedIn(true)
                     fetchSpecialities()
-                    fetchAvailabilities()
+                    // fetchAvailabilities()
                 }
                 else {
                     fetch('/trainer_me')
@@ -84,18 +84,18 @@ function UserProvider({ children }) {
             })
     }
 
-    function fetchAvailabilities() {
-        fetch('/availabilities')
-            .then(r => r.json())
-            .then(availabilities => {
-                if (!availabilities.error) {
-                    setAvailabilities(availabilities)
-                }
-                else {
-                    console.log(availabilities.error)
-                }
-            })
-    }
+    // function fetchAvailabilities() {
+    //     fetch('/availabilities')
+    //         .then(r => r.json())
+    //         .then(availabilities => {
+    //             if (!availabilities.error) {
+    //                 setAvailabilities(availabilities)
+    //             }
+    //             else {
+    //                 console.log(availabilities.error)
+    //             }
+    //         })
+    // }
 
     function clientUpdate(client) {
         fetch('/client_me', {
@@ -192,7 +192,10 @@ function UserProvider({ children }) {
             .then(appointment => {
                 if (!appointment.errors) {
                     const updatedUserAppointments = [...user.appointments, appointment]
-                    setUser({ ...user, appointments: updatedUserAppointments })
+                    const updatedUserTrainers = user.trainers.some((tr) => tr.id === appointment.trainer.id)
+                        ? user.trainers
+                        : [...user.trainers, appointment.trainer] 
+                    setUser({ ...user, appointments: updatedUserAppointments, trainers: updatedUserTrainers})
                     setErrorList(null)
                 }
                 else {
@@ -206,7 +209,6 @@ function UserProvider({ children }) {
         setSpecialities((prevSpecialities) => {
             return prevSpecialities.map((speciality) => {
                 if (speciality.id === specialityId) {
-                    console.log("speciality", speciality)
                     return {
                         ...speciality,
                         trainers: speciality.trainers.map((trainer) => {
@@ -239,8 +241,21 @@ function UserProvider({ children }) {
             })
     }
 
+    function deleteAppointment(appointmentId) {
+        fetch(`/appointments/${appointmentId}`, {
+            method: "DELETE",
+        })
+        .then(() => {
+            const updatedAppointments = user.appointments.filter((a) => a.id !== appointmentId)
+            setUser((prevUser) => ({ ...prevUser, appointments: updatedAppointments }))
+        })
+        .catch((error) => {
+            console.error("Error removing appointment:", error)
+        })
+    }
+
     return (
-        <UserContext.Provider value={{ user, clientLoggedIn, trainerLoggedIn, clientLogin, trainerLogin, clientSignup, trainerSignup, logout, specialities, addSpeciality, clientUpdate, trainerUpdate, addAppointment, deleteAvailability, errorList, isUserInvalid }}>
+        <UserContext.Provider value={{ user, clientLoggedIn, trainerLoggedIn, clientLogin, trainerLogin, clientSignup, trainerSignup, logout, specialities, addSpeciality, clientUpdate, trainerUpdate, addAppointment, deleteAvailability, deleteAppointment, errorList, isUserInvalid }}>
             {children}
         </UserContext.Provider>
     )

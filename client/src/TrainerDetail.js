@@ -15,7 +15,6 @@ function TrainerDetail() {
         }
     }
 
-    console.log(user)
     if (isUserInvalid(user)) {
         return (
             <div className="profile">

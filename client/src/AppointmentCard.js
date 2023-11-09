@@ -4,7 +4,7 @@ import { UserContext } from "./context/user";
 import Dialog from "./Dialog";
 
 function AppointmentCard({ appointment }) {
-    const { clientLoggedIn, trainerLoggedIn } = useContext(UserContext)
+    const { deleteAppointment } = useContext(UserContext)
     const [dialogVisible, setDialogVisible] = useState(false)
 
     function handleCancel() {
@@ -13,7 +13,7 @@ function AppointmentCard({ appointment }) {
 
     function handleDialogResponse(confirm) {
         if (confirm) {
-            console.log(appointment.title, " deleted")
+            deleteAppointment(appointment.id)
         }
         setDialogVisible(false)
     }

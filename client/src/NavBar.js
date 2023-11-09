@@ -3,7 +3,7 @@ import { UserContext } from "./context/user";
 import { NavLink, useNavigate } from "react-router-dom";
 
 function NavBar() {
-    const{ logout, clientLoggedIn, trainerLoggedIn } = useContext(UserContext)
+    const { logout, clientLoggedIn, trainerLoggedIn } = useContext(UserContext)
     const navigate = useNavigate()
 
     const logoutUser = () => {
@@ -11,10 +11,10 @@ function NavBar() {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' }
         })
-        .then(() => {
-            logout()
-            navigate('/')
-        })
+            .then(() => {
+                logout()
+                navigate('/')
+            })
     }
 
     if (clientLoggedIn || trainerLoggedIn) {
@@ -24,12 +24,14 @@ function NavBar() {
                 <NavLink to='/'>
                     <button>Home</button>
                 </NavLink>
-                {clientLoggedIn ? 
+                {clientLoggedIn ?
                     <NavLink to='/specialities'>
                         <button>Personal Training Options</button>
-                    </NavLink> 
-                : 
-                    null
+                    </NavLink>
+                    :
+                    <NavLink to='/availabilities'>
+                        <button>My Availabilities</button>
+                    </NavLink>
                 }
                 <NavLink to='/profile'>
                     <button>Profile</button>
@@ -42,7 +44,7 @@ function NavBar() {
         )
     }
     else {
-    return (
+        return (
             <header>
                 <NavLink to='/login'>
                     <button>Login</button>
