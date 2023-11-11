@@ -3,7 +3,7 @@ class Trainer < ApplicationRecord
     
     has_many :appointments 
     has_many :availabilities
-    has_many :clients, through: :appointments
+    has_many :clients, -> { distinct }, through: :appointments
     belongs_to :speciality 
 
     validates :username, :email, presence: true, uniqueness: true

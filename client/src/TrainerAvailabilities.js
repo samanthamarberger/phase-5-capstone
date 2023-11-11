@@ -1,10 +1,17 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useState } from "react";
 import { UserContext } from "./context/user";
 import Calendar from "./Calendar";
+import dayGridPlugin from '@fullcalendar/daygrid';
 import moment from 'moment';
+import Modal from 'react-modal';
+import './App.css';
+import EditAvailability from "./EditAvailability";
 
 function TrainerAvailabilities() {
     const { user, trainerLoggedIn } = useContext(UserContext)
+    const [selectedAppointment, setSelectedAppointment] = useState([])
+    const [modalOpen, setModalOpen] = useState(false)
+    const [editModalOpen, setEditModalOpen] = useState(false)
 
     if (!user || !user.availabilities) {
         return <h3>...loading</h3>
@@ -39,11 +46,59 @@ function TrainerAvailabilities() {
         }
     }
 
+    const handleAppointmentClick = (clickInfo) => {
+        setSelectedAppointment(clickInfo.event)
+        setModalOpen(true)
+    }
+
+    const closeModal = () => {
+        setSelectedAppointment(null)
+        setModalOpen(false)
+    }
+
+    const handleEditAppointment = () => {
+        setEditModalOpen(true)
+        setModalOpen(false)
+    }
+
+    const handleDeleteAppointment = () => {
+        console.log('Deleting appointment:', selectedAppointment)
+        closeModal()
+    }
+
     if (trainerLoggedIn) {
-        return ( 
+        return (
             <div>
-                <h3>{user.name}</h3>
-                <Calendar events={availabilities}  />
+
+                <Modal
+                    isOpen={modalOpen}
+                    onRequestClose={closeModal}
+                    contentLabel="Appointment Details"
+                    className="modal-content"
+                    overlayClassName="modal-overlay"
+                >
+                    <p>Appointment Details:</p>
+                    <p>Title: {selectedAppointment?.title}</p>
+                    <p>Start: {selectedAppointment?.start?.toLocaleString()}</p>
+                    <p>End: {selectedAppointment?.end?.toLocaleString()}</p>
+
+                    <button onClick={handleEditAppointment}>Edit</button>
+                    <button onClick={handleDeleteAppointment}>Delete</button>
+                    <button onClick={closeModal}>Close</button>
+                </Modal>
+
+                {editModalOpen && (
+                    <EditAvailability
+                        availability={selectedAppointment}
+                        onClose={() => setEditModalOpen(false)}
+                    />
+                )}
+
+                <Calendar
+                    plugins={[dayGridPlugin]}
+                    events={availabilities}
+                    eventClick={handleAppointmentClick}
+                />
             </div>
         )
     }

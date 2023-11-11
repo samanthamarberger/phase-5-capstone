@@ -1,7 +1,4 @@
 Rails.application.routes.draw do
-    # resources :trails, only: [ :index, :create, :update, :destroy ] do
-  #   resources :reviews, only: [ :create, :update, :destroy ]
-  # end
 
   # get '/client_me', to: 'clients#show'
   post '/client_login', to: 'sessions#client_create'
@@ -16,6 +13,12 @@ Rails.application.routes.draw do
   get '/speciality_names', to: 'specialities#view_only'
 
   resources :specialities, only: [:index, :create] 
+  resources :appointments, only: [:create, :destroy]
+
+  resources :trainers do 
+    resources :availabilities, only: [:create, :index]
+    delete 'availabilities/:availability_id', to: 'availabilities#destroy', on: :member, as: 'delete_availability'
+  end
 
   get "*path", to: "fallback#index", constraints: ->(req) { !req.xhr? && req.format.html? }
 end

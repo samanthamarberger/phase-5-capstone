@@ -18,7 +18,6 @@ ActiveRecord::Schema.define(version: 2023_11_02_224841) do
   create_table "appointments", force: :cascade do |t|
     t.integer "client_id"
     t.integer "trainer_id"
-    t.date "date"
     t.datetime "start"
     t.datetime "end"
     t.datetime "created_at", precision: 6, null: false
@@ -27,7 +26,6 @@ ActiveRecord::Schema.define(version: 2023_11_02_224841) do
 
   create_table "availabilities", force: :cascade do |t|
     t.integer "trainer_id"
-    t.date "date"
     t.datetime "start"
     t.datetime "end"
     t.datetime "created_at", precision: 6, null: false

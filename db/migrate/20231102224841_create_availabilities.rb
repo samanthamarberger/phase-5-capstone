@@ -2,7 +2,6 @@ class CreateAvailabilities < ActiveRecord::Migration[6.1]
   def change
     create_table :availabilities do |t|
       t.integer :trainer_id
-      t.date :date
       t.datetime :start
       t.datetime :end
 

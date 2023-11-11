@@ -1,5 +1,5 @@
 class AppointmentSerializer < ActiveModel::Serializer 
-    attributes :id, :date, :start, :end, :trainer_name, :title, :client_name
+    attributes :id, :start, :end, :trainer_name, :title, :client_name
 
     def trainer_name
         Trainer.find(object.trainer_id).name
