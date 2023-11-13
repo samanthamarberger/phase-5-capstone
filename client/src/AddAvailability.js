@@ -16,25 +16,27 @@ function AddAvailability({ selectedDate, onClose }) {
     }
     
     return (
-        <form onSubmit={handleSubmit}>
-            <label>Start Time:</label>
-            <input
-                className="start"
-                type="datetime-local"
-                value={start}
-                onChange={(e)=>{setStart(e.target.value)}}
-            />
-            <br />
-            <label>End Time:</label>
-            <input
-                className="end"
-                type="datetime-local"
-                value={end}
-                onChange={(e)=>{setEnd(e.target.value)}}
-            />
-            <button type="submit">Save</button>
-        </form>
+        <div>
+            <h2>Add Availability</h2>
+            <form onSubmit={handleSubmit}>
+                <label>Start Time:</label>
+                <input
+                    className="start"
+                    type="datetime-local"
+                    value={start}
+                    onChange={(e)=>{setStart(e.target.value)}}
+                />
+                <br />
+                <label>End Time:</label>
+                <input
+                    className="end"
+                    type="datetime-local"
+                    value={end}
+                    onChange={(e)=>{setEnd(e.target.value)}}
+                />
+                <button type="submit">Save</button>
+            </form>
+        </div>
     )
-
 }
 export default AddAvailability

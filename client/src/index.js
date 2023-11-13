@@ -5,7 +5,8 @@ import './index.css';
 import App from './App';
 import Modal from 'react-modal';
 
-Modal.setAppElement('#root');
+Modal.setAppElement('#root')
+process.env.TZ = 'America/Denver'
 
 ReactDOM.render(
   <React.StrictMode>
