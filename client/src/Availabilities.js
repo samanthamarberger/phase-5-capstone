@@ -6,7 +6,7 @@ import Dialog from "./Dialog";
 import { useNavigate, useParams } from "react-router-dom";
 
 function Availabilities({ trainer, handleButtonClick }) {
-    const { user, addAppointment, deleteAvailability, errorList, specialities } = useContext(UserContext)
+    const { user, addAppointment, clientDeleteAvailability, errorList, specialities } = useContext(UserContext)
     const navigate = useNavigate()
     const params = useParams()
     const speciality = specialities.find((sp) => (sp.id === parseInt(params.id)))
@@ -68,7 +68,7 @@ function Availabilities({ trainer, handleButtonClick }) {
             start: selectedAppointment.start,
             end: selectedAppointment.end,
         })
-        deleteAvailability(trainer.id, selectedAppointment.availability_id, speciality.id)
+        clientDeleteAvailability(trainer.id, selectedAppointment.availability_id, speciality.id)
         setDialogVisible(false)
         navigate('/appointments')
     }

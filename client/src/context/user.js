@@ -231,7 +231,7 @@ function UserProvider({ children }) {
         })
     }
 
-    function deleteAvailability(trainerId, availabilityId, specialityId) {
+    function clientDeleteAvailability(trainerId, availabilityId, specialityId) {
         fetch(`/trainers/${trainerId}/availabilities/${availabilityId}`, {
             method: "DELETE",
         })
@@ -254,8 +254,22 @@ function UserProvider({ children }) {
         })
     }
 
+    function deleteAvailability(availabilityId) {
+        fetch(`/availabilities/${availabilityId}`, {
+            method: 'DELETE',
+        })
+        .then(() => {
+            const updatedAvailabilities = user.availabilities.filter((a) => a.id !== availabilityId)
+            setUser((prevUser) => ({...prevUser, availabilities: updatedAvailabilities}))
+        })
+        .catch((error) => {
+            console.error("Error removing availability:", error)
+        })
+    }
+    
+
     return (
-        <UserContext.Provider value={{ user, clientLoggedIn, trainerLoggedIn, clientLogin, trainerLogin, clientSignup, trainerSignup, logout, specialities, addSpeciality, clientUpdate, trainerUpdate, addAppointment, deleteAvailability, deleteAppointment, errorList, isUserInvalid }}>
+        <UserContext.Provider value={{ user, clientLoggedIn, trainerLoggedIn, clientLogin, trainerLogin, clientSignup, trainerSignup, logout, specialities, addSpeciality, clientUpdate, trainerUpdate, addAppointment, clientDeleteAvailability, deleteAppointment, deleteAvailability, errorList, isUserInvalid }}>
             {children}
         </UserContext.Provider>
     )

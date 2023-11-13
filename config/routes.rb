@@ -16,9 +16,11 @@ Rails.application.routes.draw do
   resources :appointments, only: [:create, :destroy]
 
   resources :trainers do 
-    resources :availabilities, only: [:create, :index]
-    delete 'availabilities/:availability_id', to: 'availabilities#destroy', on: :member, as: 'delete_availability'
+    resources :availabilities, only: [:index]
+    delete 'availabilities/:availability_id', to: 'availabilities#client_delete', on: :member, as: 'delete_availability'
   end
+
+  resources :availabilities, only: [:destroy, :create]
 
   get "*path", to: "fallback#index", constraints: ->(req) { !req.xhr? && req.format.html? }
 end

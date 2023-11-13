@@ -8,8 +8,8 @@ import './App.css';
 import EditAvailability from "./EditAvailability";
 
 function TrainerAvailabilities() {
-    const { user, trainerLoggedIn } = useContext(UserContext)
-    const [selectedAppointment, setSelectedAppointment] = useState([])
+    const { user, trainerLoggedIn, deleteAvailability } = useContext(UserContext)
+    const [selectedAvailability, setSelectedAvailability] = useState([])
     const [modalOpen, setModalOpen] = useState(false)
     const [editModalOpen, setEditModalOpen] = useState(false)
 
@@ -46,23 +46,24 @@ function TrainerAvailabilities() {
         }
     }
 
-    const handleAppointmentClick = (clickInfo) => {
-        setSelectedAppointment(clickInfo.event)
+    const handleAvailabilityClick = (clickInfo) => {
+        setSelectedAvailability(clickInfo.event)
         setModalOpen(true)
     }
 
     const closeModal = () => {
-        setSelectedAppointment(null)
+        setSelectedAvailability(null)
         setModalOpen(false)
     }
 
-    const handleEditAppointment = () => {
+    const handleEditAvailability = () => {
         setEditModalOpen(true)
         setModalOpen(false)
     }
 
-    const handleDeleteAppointment = () => {
-        console.log('Deleting appointment:', selectedAppointment)
+    const handleDeleteAvailability = () => {
+        console.log('Deleting Availability:', selectedAvailability.extendedProps.availability_id)
+        deleteAvailability(selectedAvailability.extendedProps.availability_id)
         closeModal()
     }
 
@@ -73,23 +74,23 @@ function TrainerAvailabilities() {
                 <Modal
                     isOpen={modalOpen}
                     onRequestClose={closeModal}
-                    contentLabel="Appointment Details"
+                    contentLabel="Availability Details"
                     className="modal-content"
                     overlayClassName="modal-overlay"
                 >
-                    <p>Appointment Details:</p>
-                    <p>Title: {selectedAppointment?.title}</p>
-                    <p>Start: {selectedAppointment?.start?.toLocaleString()}</p>
-                    <p>End: {selectedAppointment?.end?.toLocaleString()}</p>
+                    <p>Availability Details:</p>
+                    <p>Title: {selectedAvailability?.title}</p>
+                    <p>Start: {selectedAvailability?.start?.toLocaleString()}</p>
+                    <p>End: {selectedAvailability?.end?.toLocaleString()}</p>
 
-                    <button onClick={handleEditAppointment}>Edit</button>
-                    <button onClick={handleDeleteAppointment}>Delete</button>
+                    <button onClick={handleEditAvailability}>Edit</button>
+                    <button onClick={handleDeleteAvailability}>Delete</button>
                     <button onClick={closeModal}>Close</button>
                 </Modal>
 
                 {editModalOpen && (
                     <EditAvailability
-                        availability={selectedAppointment}
+                        availability={selectedAvailability}
                         onClose={() => setEditModalOpen(false)}
                     />
                 )}
@@ -97,7 +98,7 @@ function TrainerAvailabilities() {
                 <Calendar
                     plugins={[dayGridPlugin]}
                     events={availabilities}
-                    eventClick={handleAppointmentClick}
+                    eventClick={handleAvailabilityClick}
                 />
             </div>
         )
