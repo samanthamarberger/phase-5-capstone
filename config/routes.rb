@@ -20,7 +20,7 @@ Rails.application.routes.draw do
     delete 'availabilities/:availability_id', to: 'availabilities#client_delete', on: :member, as: 'delete_availability'
   end
 
-  resources :availabilities, only: [:destroy, :create]
+  resources :availabilities, only: [:destroy, :create, :update]
 
   get "*path", to: "fallback#index", constraints: ->(req) { !req.xhr? && req.format.html? }
 end

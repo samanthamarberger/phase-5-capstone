@@ -267,9 +267,47 @@ function UserProvider({ children }) {
         })
     }
     
+    function editAvailability(availabilityId, availability){
+        fetch(`/availabilities/${availabilityId}`, {
+            method: 'PATCH',
+            body: JSON.stringify(availability),
+            headers: {
+                'Content-Type':'application/json',
+            },
+        })
+        .then((r) => r.json())
+        .then((updatedAvailability) => {
+            if(!updatedAvailability.errors) {
+                if (!updatedAvailability.error) {
+                    frontEndEditAvailability(updatedAvailability, availabilityId)
+                    setErrorList(null)
+                }
+                else {
+                    const error = <li style={{ color: 'red' }}>{updatedAvailability.error}</li>
+                    setErrorList([error])
+                }
+            }
+            else {
+                const errors = updatedAvailability.errors.map((error, index) => (
+                    <li key={index} style={{ color: 'red' }}>{error}</li>
+                ))
+                setErrorList(errors)
+            }
+        })
+    }
+
+    function frontEndEditAvailability(updatedAvailability, availabilityId) {
+        const updatedAvailabilities = user.availabilities.map((a) => {
+            if (a.id === availabilityId) {
+                return updatedAvailability
+            }
+            return a
+        })
+        setUser((prevUser) => ({...prevUser, availabilities: updatedAvailabilities}))
+    }
 
     return (
-        <UserContext.Provider value={{ user, clientLoggedIn, trainerLoggedIn, clientLogin, trainerLogin, clientSignup, trainerSignup, logout, specialities, addSpeciality, clientUpdate, trainerUpdate, addAppointment, clientDeleteAvailability, deleteAppointment, deleteAvailability, errorList, isUserInvalid }}>
+        <UserContext.Provider value={{ user, clientLoggedIn, trainerLoggedIn, clientLogin, trainerLogin, clientSignup, trainerSignup, logout, specialities, addSpeciality, clientUpdate, trainerUpdate, addAppointment, clientDeleteAvailability, deleteAppointment, deleteAvailability, editAvailability, errorList, isUserInvalid }}>
             {children}
         </UserContext.Provider>
     )

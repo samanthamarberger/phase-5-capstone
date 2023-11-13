@@ -25,6 +25,20 @@ class AvailabilitiesController < ApplicationController
         end
     end
 
+    def update
+        availability = current_trainer.availabilities.find_by(id: params[:id])
+        if availability
+            availability.update(availability_params)
+            if availability.valid?
+                render json: availability, status: :accepted
+            else
+                render json: { errors: availability.errors.full_messages }, status: :unprocessable_entity
+            end
+        else
+            render json: { error: 'You do not have permission to update this availability' }, status: :unauthorized
+        end
+    end
+
     private
 
     def client_trainer
@@ -33,5 +47,9 @@ class AvailabilitiesController < ApplicationController
 
     def current_trainer
         Trainer.find_by(id: session[:id])
+    end
+
+    def availability_params
+        params.permit(:start, :end)
     end
 end

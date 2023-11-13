@@ -1,14 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { UserContext } from "./context/user";
 
 function EditAvailability({ availability, onClose }) {
 
+    const { editAvailability } = useContext(UserContext)
     const [tempStart, setTempStart] = useState(availability.start.toISOString().slice(0, 16))
     const [tempEnd, setTempEnd] = useState(availability.end.toISOString().slice(0, 16))
 
     function handleSubmit(e){
         e.preventDefault()
-        console.log("Start:", tempStart)
-        console.log("End:", tempEnd)
+        editAvailability(availability.extendedProps.availability_id, {
+            start: tempStart,
+            end: tempEnd
+        })
         onClose()
     }
 
