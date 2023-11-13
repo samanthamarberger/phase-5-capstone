@@ -39,6 +39,15 @@ class AvailabilitiesController < ApplicationController
         end
     end
 
+    def create
+        availability = current_trainer.availabilities.create(availability_params)
+        if availability.valid?
+            render json: availability, status: :created
+        else
+            render json: { errors: availability.errors.full_messages }, status: unprocessable_entity
+        end
+    end
+
     private
 
     def client_trainer

@@ -306,8 +306,29 @@ function UserProvider({ children }) {
         setUser((prevUser) => ({...prevUser, availabilities: updatedAvailabilities}))
     }
 
+    function addAvailability(newAvailabilty){
+        fetch(`/availabilities`, {
+            method: 'POST',
+            headers: {
+                'Content-Type':'application/json',
+            },
+            body: JSON.stringify(newAvailabilty),
+        })
+        .then((r) => r.json())
+        .then((newAvailabilty) => {
+            if(!newAvailabilty.errors){
+                const newAvailabilities = [...user.availabilities, newAvailabilty]
+                setUser((prevUser) => ({...prevUser, availabilities: newAvailabilities}))
+            }
+            else {
+                const errorLis = newAvailabilty.errors.map((e, index) => <li key={index} style={{ color: 'red'}}>{e}</li>)
+                setErrorList(errorLis)
+            }
+        })
+    }
+
     return (
-        <UserContext.Provider value={{ user, clientLoggedIn, trainerLoggedIn, clientLogin, trainerLogin, clientSignup, trainerSignup, logout, specialities, addSpeciality, clientUpdate, trainerUpdate, addAppointment, clientDeleteAvailability, deleteAppointment, deleteAvailability, editAvailability, errorList, isUserInvalid }}>
+        <UserContext.Provider value={{ user, clientLoggedIn, trainerLoggedIn, clientLogin, trainerLogin, clientSignup, trainerSignup, logout, specialities, addSpeciality, clientUpdate, trainerUpdate, addAppointment, clientDeleteAvailability, deleteAppointment, deleteAvailability, editAvailability, addAvailability, errorList, isUserInvalid }}>
             {children}
         </UserContext.Provider>
     )

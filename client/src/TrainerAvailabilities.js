@@ -6,16 +6,21 @@ import moment from 'moment';
 import Modal from 'react-modal';
 import './App.css';
 import EditAvailability from "./EditAvailability";
+import AddAvailability from "./AddAvailability";
 
 function TrainerAvailabilities() {
-    const { user, trainerLoggedIn, deleteAvailability } = useContext(UserContext)
+    const { user, trainerLoggedIn, deleteAvailability, errorList } = useContext(UserContext)
     const [selectedAvailability, setSelectedAvailability] = useState([])
     const [modalOpen, setModalOpen] = useState(false)
     const [editModalOpen, setEditModalOpen] = useState(false)
+    const [createModalOpen, setCreateModalOpen] = useState(false)
+    const [selectedDate, setSelectedDate] = useState(null)
 
     if (!user || !user.availabilities) {
+        console.log("User or availabilities not available yet:", user)
         return <h3>...loading</h3>
     }
+
     const availabilities = user.availabilities.map(a => ({
         title: `${calculateDuration(a.start, a.end)} available`,
         start: a.start,
@@ -46,6 +51,11 @@ function TrainerAvailabilities() {
         }
     }
 
+    const handleDateClick = (info) => {
+        setSelectedDate(info.dateStr)
+        setCreateModalOpen(true)
+    }
+
     const handleAvailabilityClick = (clickInfo) => {
         setSelectedAvailability(clickInfo.event)
         setModalOpen(true)
@@ -70,7 +80,7 @@ function TrainerAvailabilities() {
     if (trainerLoggedIn) {
         return (
             <div>
-
+                {errorList}
                 <Modal
                     isOpen={modalOpen}
                     onRequestClose={closeModal}
@@ -95,10 +105,18 @@ function TrainerAvailabilities() {
                     />
                 )}
 
+                {createModalOpen && (
+                    <AddAvailability
+                        selectedDate={selectedDate}
+                        onClose={() => setCreateModalOpen(false)}
+                    />
+                )}
+
                 <Calendar
                     plugins={[dayGridPlugin]}
                     events={availabilities}
                     eventClick={handleAvailabilityClick}
+                    dateClick={handleDateClick}
                 />
             </div>
         )
