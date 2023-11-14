@@ -20,6 +20,7 @@ function TrainerAvailabilities() {
         console.log("User or availabilities not available yet:", user)
         return <h3>...loading</h3>
     }
+    console.log(user)
 
     const availabilities = user.availabilities.map(a => ({
         title: `${calculateDuration(a.start, a.end)} available`,

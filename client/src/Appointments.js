@@ -4,7 +4,7 @@ import Calendar from './Calendar';
 import AppointmentCard from './AppointmentCard';
 
 function Appointments() {
-    const { user, clientLoggedIn, trainerLoggedIn } = useContext(UserContext)
+    const { user, clientLoggedIn, trainerLoggedIn, errorList } = useContext(UserContext)
     const [selectedAppointment, setSelectedAppointment] = useState(null)
 
     if (!user || !user.appointments) {
@@ -33,6 +33,7 @@ function Appointments() {
         return (
             <div>
                 < br/>
+                {errorList}
                 {selectedAppointment && <AppointmentCard appointment={selectedAppointment} onClose={onClose} />}
                 <Calendar events={appointments} eventClick={handleAppointmentClick} />
             </div>

@@ -44,7 +44,7 @@ class AvailabilitiesController < ApplicationController
         if availability.valid?
             render json: availability, status: :created
         else
-            render json: { errors: availability.errors.full_messages }, status: unprocessable_entity
+            render json: { errors: availability.errors.full_messages }, status: :unprocessable_entity
         end
     end
 
