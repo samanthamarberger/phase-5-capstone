@@ -58,7 +58,7 @@ function Availabilities({ trainer, handleButtonClick }) {
             trainer_id: clickInfo.event.extendedProps.trainer_id,
             availability_id: clickInfo.event.extendedProps.availability_id,
         })
-        setDialogMessage(`Would you like to scheldule an appointment with ${trainer.name} from ${clickInfo.event.start} to ${clickInfo.event.end}?`)
+        setDialogMessage(`Would you like to scheldule an appointment with ${trainer.name} at ${trainer.location} from ${clickInfo.event.start} to ${clickInfo.event.end}?`)
         setDialogVisible(true)
     }
 
