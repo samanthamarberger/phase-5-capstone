@@ -16,7 +16,7 @@ function Home() {
         return (
             <div className="Home">
                 <h1>Trainer {user.name}'s Home Page</h1>
-                <p>Welcome to Find Your Fit! As a fitness coach be sure to keep up on messages from clients and keep your location up to date!  </p>
+                <p>Welcome to Find Your Fit! As a fitness coach be sure to keep your scheldule updated!  </p>
             </div>
         )
     } 

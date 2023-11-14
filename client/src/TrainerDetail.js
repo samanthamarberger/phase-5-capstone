@@ -27,6 +27,7 @@ function TrainerDetail() {
     return (
         <div className="Profile">
             <p>My Bio: {user.bio}</p>
+            <p>My location: {user.location}</p>
             {canEdit()}
         </div>
     )

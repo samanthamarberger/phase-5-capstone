@@ -10,7 +10,6 @@ function Appointments() {
     if (!user || !user.appointments) {
         return <h3>...loading</h3>
     }
-    console.log(new Date())
 
     const appointments = user.appointments.map(a => ({
         title: clientLoggedIn
@@ -19,17 +18,22 @@ function Appointments() {
         start: a.start,
         end: a.end,
         id: a.id,
+        location: a.location,
     }))
 
     const handleAppointmentClick = (clickInfo) => {
         setSelectedAppointment(clickInfo.event)
     }
 
+    const onClose = () => {
+        setSelectedAppointment(null)
+    }
+
     if (clientLoggedIn || trainerLoggedIn) {
         return (
             <div>
-                <p>{user.name}'s appointments</p>
-                {selectedAppointment && <AppointmentCard appointment={selectedAppointment} />}
+                < br/>
+                {selectedAppointment && <AppointmentCard appointment={selectedAppointment} onClose={onClose} />}
                 <Calendar events={appointments} eventClick={handleAppointmentClick} />
             </div>
         )

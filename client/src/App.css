@@ -67,3 +67,180 @@
   margin-top: 50px; 
 }
 
+button {
+  background-color: #f39f31; /* Green */
+  border: 2;
+  border-color: white;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+
+.profile-picture {
+  border: 1px solid #ddd;
+  border-radius: 50%;
+  padding: 5px;
+  width: 300px;
+}
+
+.trainer-picture {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
+  width: 300px;
+}
+
+.speciality-picture {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
+  width: 800px;
+}
+
+input[type=text], select, textarea {
+  width: 400px; 
+  padding: 12px; 
+  border: 1px solid #ccc; 
+  border-radius: 4px; 
+  box-sizing: content-box; 
+  margin-top: 6px;
+  margin-bottom: 16px; 
+  resize: vertical;
+}
+
+label {
+  color: #B4886B;
+  font-weight: bold;
+  display: block;
+}
+
+h1 {
+  color: #B4886B;
+}
+
+h2 {
+  color: black;
+}
+
+.header-title {
+  overflow: hidden;
+  padding: 20px 10px;
+  float: left;
+  color: #B4886B;
+  padding: 12px;
+  font-size: 20px;
+  line-height: 2px;
+  position: absolute;
+  top: 8%; 
+  transform: translateY(-50%);
+  font-family: Gill Sans;
+  margin-top: 50px;
+}
+
+.header-container {
+  display: flex;
+  align-items: center;
+}
+
+.button-container{
+  align-items: center;
+  margin-left: 200px;
+}
+
+header {
+  background-color: #f1f1f1;
+  padding: 20px 10px;
+}
+
+.header-img {
+  width: 80px;
+  display: block;
+  margin-top: 0px;
+  margin-bottom: 20px;
+  margin-left: 25px;
+}
+
+header button {
+  margin-top: 0px;
+  
+}
+
+p {
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  font-family: Verdana;
+}
+
+.login-submit {
+  background-color: #f39f31; /* Green */
+  border: 2;
+  border-color: white;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+
+.Home {
+  background-image: url(https://t4.ftcdn.net/jpg/01/13/65/71/360_F_113657105_Bktota7BzQ5cEUcZb4l0D4qSD2Sw08P2.jpg);
+  background-size: cover;
+  background-attachment: fixed;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.Home h1 {
+  color: #B4886B;
+  font-size: 100px;
+  text-shadow: 
+      -1px -1px 0 black,
+      1px -1px 0 black,
+      -1px 1px 0 black,
+      1px 1px 0 black
+}
+
+.Home p {
+  color: white;
+  font-size:50px;
+  margin-right: 150px; 
+  margin-left: 80px;
+  text-shadow: 
+      -1px -1px 0 black,
+      1px -1px 0 black,
+      -1px 1px 0 black,
+      1px 1px 0 black
+}
+
+.Home label {
+  color: white;
+  font-size:50px;
+  margin-right: 150px; 
+  margin-left: 80px;
+  text-shadow: 
+      -1px -1px 0 black,
+      1px -1px 0 black,
+      -1px 1px 0 black,
+      1px 1px 0 black
+}
+
+.checkbox {
+  margin: 4px 0 0;
+  line-height: normal;
+  width: 30px;
+  height: 30px;
+  accent-color: #B4886B;
+}
+
+
+
+
+

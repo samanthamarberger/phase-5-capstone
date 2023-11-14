@@ -1,5 +1,5 @@
 class AppointmentSerializer < ActiveModel::Serializer 
-    attributes :id, :start, :end, :trainer_name, :title, :client_name
+    attributes :id, :start, :end, :trainer_name, :title, :client_name, :location
 
     def trainer_name
         Trainer.find(object.trainer_id).name
@@ -11,6 +11,10 @@ class AppointmentSerializer < ActiveModel::Serializer
 
     def client_name
         Client.find(object.client_id).name
+    end
+
+    def location
+        Trainer.find(object.trainer_id).location
     end
 
     belongs_to :client

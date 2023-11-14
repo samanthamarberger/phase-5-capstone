@@ -19,42 +19,52 @@ function NavBar() {
 
     if (clientLoggedIn || trainerLoggedIn) {
         return (
-            <header>
-                <button onClick={logoutUser}>Logout</button>
-                <NavLink to='/'>
-                    <button>Home</button>
-                </NavLink>
-                {clientLoggedIn ?
-                    <NavLink to='/specialities'>
-                        <button>Personal Training Options</button>
-                    </NavLink>
-                    :
-                    <NavLink to='/availabilities'>
-                        <button>My Availabilities</button>
-                    </NavLink>
-                }
-                <NavLink to='/profile'>
-                    <button>Profile</button>
-                </NavLink>
-                <NavLink to='/appointments'>
-                    <button>My Appointments</button>
-                </NavLink>
-
-            </header>
+            <div>
+                <header className="header-container">
+                    <img className="header-img" alt="header" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZMsuRz3LxIuQpEpiQohiaoM4RaT6GT3bHLw&usqp=CAU"/>
+                    <h3 className="header-title">ElevateFit</h3>
+                    <div className="button-container">
+                    <button onClick={logoutUser}>Logout</button>
+                        <NavLink to='/'>
+                            <button>Home</button>
+                        </NavLink>
+                        {clientLoggedIn ?
+                            <NavLink to='/specialities'>
+                                <button>Personal Training Options</button>
+                            </NavLink>
+                            :
+                            <NavLink to='/availabilities'>
+                                <button>My Availabilities</button>
+                            </NavLink>
+                        }
+                        <NavLink to='/profile'>
+                            <button>Profile</button>
+                        </NavLink>
+                        <NavLink to='/appointments'>
+                            <button>My Appointments</button>
+                        </NavLink>
+                    </div>
+                    <br />
+                </header>
+            </div>
         )
     }
     else {
         return (
-            <header>
-                <NavLink to='/login'>
-                    <button>Login</button>
-                </NavLink>
-                <NavLink to='/signup'>
-                    <button>Signup</button>
-                </NavLink>
-                <NavLink to='/'>
-                    <button>Home</button>
-                </NavLink>
+            <header className="header-container">
+                <img className="header-img" alt="header" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZMsuRz3LxIuQpEpiQohiaoM4RaT6GT3bHLw&usqp=CAU"/>
+                <h3 className="header-title">ElevateFit</h3>
+                <div className="button-container">
+                    <NavLink to='/login'>
+                        <button>Login</button>
+                    </NavLink>
+                    <NavLink to='/signup'>
+                        <button>Signup</button>
+                    </NavLink>
+                    <NavLink to='/'>
+                        <button>Home</button>
+                    </NavLink>
+                </div>
             </header>
         )
     }

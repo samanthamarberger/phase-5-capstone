@@ -101,10 +101,11 @@ function Signup() {
     }
 
     return (
-        <div>
+        <div className="Home">
+            <br />
             <label>
                 Client:
-                <input
+                <input className="checkbox"
                     type="checkbox"
                     checked={clientChecked}
                     onChange={handleClientCheck}
@@ -112,12 +113,13 @@ function Signup() {
             </label>
             <label>
                 Trainer:
-                <input
+                <input className="checkbox"
                     type="checkbox"
                     checked={trainerChecked}
                     onChange={handleTrainerCheck}
                 />
             </label>
+            <br />
             <form onSubmit={handleSubmit}>
                 <label>Username: </label>
                 <input
@@ -161,7 +163,7 @@ function Signup() {
                         onChange={(e) => setSpeciality(e.target.value)}
                     />
                 )}
-                <input type="submit" />
+                <input className="login-submit" type="submit" />
             </form>
             <ul>
                 {errorList}

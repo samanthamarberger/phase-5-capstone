@@ -79,7 +79,7 @@ function Login() {
     }
 
     return (
-        <div>
+        <div className="Home">
             <form onSubmit={handleSubmit}>
                     <label>Username: </label>
                     <input
@@ -94,10 +94,10 @@ function Login() {
                         id="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                    /> <br />
+                    /> <br /> <br />
                     <label>
                         Client:
-                        <input 
+                        <input className="checkbox"
                             type="checkbox"
                             checked={clientChecked}
                             onChange={handleClientCheck}
@@ -105,14 +105,14 @@ function Login() {
                     </label> <br/>
                     <label>
                         Trainer:
-                        <input 
+                        <input className="checkbox"
                             type="checkbox"
                             checked={trainerChecked}
                             onChange={handleTrainerCheck}
                         />
                     </label>
                     <br />
-                    <input type="submit" />
+                    <input className="login-submit" type="submit" />
                 </form>
                 <ul>
                     {errorList}

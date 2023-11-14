@@ -28,6 +28,7 @@ function TrainerAvailabilities() {
         color: 'green',
         trainer_id: user.id,
         availability_id: a.id,
+        location: a.location
     }))
 
     function calculateDuration(start, end) {
@@ -92,6 +93,7 @@ function TrainerAvailabilities() {
                     <p>Title: {selectedAvailability?.title}</p>
                     <p>Start: {selectedAvailability?.start?.toLocaleString()}</p>
                     <p>End: {selectedAvailability?.end?.toLocaleString()}</p>
+                    <p>Location: {selectedAvailability?.extendedProps.location}</p>
 
                     <button onClick={handleEditAvailability}>Edit</button>
                     <button onClick={handleDeleteAvailability}>Delete</button>
@@ -111,7 +113,7 @@ function TrainerAvailabilities() {
                         onClose={() => setCreateModalOpen(false)}
                     />
                 )}
-
+                <br />
                 <Calendar
                     plugins={[dayGridPlugin]}
                     events={availabilities}

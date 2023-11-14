@@ -11,7 +11,7 @@ function Trainer({ trainer }) {
     return (
         <div>
             <h2>{trainer.name}</h2>
-            <img src={trainer.image} alt={trainer.name} />
+            <img className="trainer-picture" src={trainer.image} alt={trainer.name} />
             <p>{trainer.bio}</p>
             {showAvailabilities ? (
                 <Availabilities trainer={trainer} handleButtonClick={handleButtonClick}/>
@@ -21,6 +21,7 @@ function Trainer({ trainer }) {
                 </button>
             )}
             <p>Email me for any questions at: {trainer.email}</p>
+            <hr />
         </div>
     )
 }

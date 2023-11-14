@@ -34,7 +34,7 @@ function Trainers() {
     if (clientLoggedIn) {
         return (
             <div className="Trainers">
-                <h2>Trainers for {speciality.name}: </h2>
+                <h1>Trainers for {speciality.name}: </h1>
                 {trainers}
             </div>
         );

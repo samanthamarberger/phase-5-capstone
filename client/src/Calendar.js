@@ -8,7 +8,7 @@ import interactionPlugin from '@fullcalendar/interaction';
 function Calendar({ events, eventClick, dateClick }) {
 
     return (
-        <div className="Calendar">
+        <div className="calendar">
             <FullCalendar 
             initialView='dayGridMonth'
             headerToolbar={{

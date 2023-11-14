@@ -16,7 +16,8 @@ function Profile() {
         return (
             <div className="Profile">
                 <h1>{user.name}'s Profile</h1>
-                <img src={user.image} alt={user.name}/>
+                <img className="profile-picture" src={user.image} alt={user.name}/>
+                <h2>{user.name}</h2>
                 <p>{user.email}</p>
                 {clientLoggedIn ? <ClientDetail/> : <TrainerDetail/>}
                 <h3>Contact my {clientLoggedIn ? "Trainers" : "Clients"}:</h3>
