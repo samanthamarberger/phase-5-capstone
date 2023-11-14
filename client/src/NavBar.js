@@ -54,7 +54,7 @@ function NavBar() {
             <header className="header-container">
                 <img className="header-img" alt="header" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZMsuRz3LxIuQpEpiQohiaoM4RaT6GT3bHLw&usqp=CAU"/>
                 <h3 className="header-title">ElevateFit</h3>
-                <div className="button-container">
+                <div className="sign-button-container">
                     <NavLink to='/login'>
                         <button>Login</button>
                     </NavLink>

@@ -147,7 +147,14 @@ h2 {
 
 .button-container{
   align-items: center;
+  display: flex;
   margin-left: 200px;
+}
+
+.sign-button-container {
+  align-items: center;
+  display: flex;
+  margin-left: 400px;
 }
 
 header {
