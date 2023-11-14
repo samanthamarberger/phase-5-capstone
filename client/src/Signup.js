@@ -4,7 +4,7 @@ import { UserContext } from './context/user'
 import CustomSelect from './CustomSelect'
 
 function Signup() {
-    const { clientSignup, trainerSignup } = useContext(UserContext)
+    const { signup } = useContext(UserContext)
     const [username, setUsername] = useState("")
     const [name, setName] = useState("")
     const [email, setEmail] = useState("")
@@ -52,7 +52,7 @@ function Signup() {
                 .then(r => r.json())
                 .then(client => {
                     if (!client.errors) {
-                        clientSignup(client)
+                        signup(client)
                         navigate('/profile')
                     }
                     else {
@@ -79,7 +79,7 @@ function Signup() {
                 .then(r => r.json())
                 .then(trainer => {
                     if (!trainer.errors) {
-                        trainerSignup(trainer)
+                        signup(trainer)
                         if (trainer.speciality_id !== 1){
                             navigate('/profile')
                         }

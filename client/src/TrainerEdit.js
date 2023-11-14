@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { UserContext } from "./context/user";
 
 function TrainerEdit({ setEditForm }) {
-    const { user, specialities, trainerUpdate } = useContext(UserContext)
+    const { user, specialities, updateProfile } = useContext(UserContext)
     const [tempUsername, setTempUsername] = useState(user.username)
     const [tempName, setTempName] = useState(user.name)
     const [tempEmail, setTempEmail] = useState(user.email)
@@ -13,7 +13,7 @@ function TrainerEdit({ setEditForm }) {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        trainerUpdate({
+        updateProfile('/trainer_me', {
             username: tempUsername,
             name: tempName,
             email: tempEmail,

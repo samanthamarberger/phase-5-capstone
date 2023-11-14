@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom"
 import { UserContext } from './context/user'
 
 function Login() {
-    const { clientLogin, trainerLogin } = useContext(UserContext)
+    const { login } = useContext(UserContext)
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const [errorList, setErrorList] = useState("")
@@ -25,7 +25,7 @@ function Login() {
             .then(r => r.json())
             .then(user => {
                 if (!user.errors) {
-                    clientLogin(user)
+                    login(user)
                     setErrorList(null)
                     navigate(`/`)
                 }
@@ -49,7 +49,7 @@ function Login() {
             .then(r => r.json())
             .then(user => {
                 if (!user.errors) {
-                    trainerLogin(user)
+                    login(user)
                     setErrorList(null)
                     if(user.speciality_id === 1) {
                         navigate(`/profile`)

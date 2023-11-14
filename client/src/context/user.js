@@ -8,35 +8,49 @@ function UserProvider({ children }) {
     const [trainerLoggedIn, setTrainerLoggedIn] = useState(false)
     const [specialities, setSpecialities] = useState([])
     const [errorList, setErrorList] = useState([])
-    // const [availabilities, setAvailabilities] = useState([])
 
-    const clientSignup = (userData) => {
+    const setLoggedIn = (userData) => {
         setUser(userData)
         fetchSpecialities()
-        setClientLoggedIn(true)
-    }
-
-    const trainerSignup = (userData) => {
-        setUser(userData)
-        fetchSpecialities()
-        setTrainerLoggedIn(true)
+        userData.status === 'Client' ? setClientLoggedIn(true) : setTrainerLoggedIn(true);
     }
 
-    const clientLogin = (userData) => {
-        setUser(userData)
-        fetchSpecialities()
-        setClientLoggedIn(true)
+    const signup = (userData) => {
+        setLoggedIn(userData)
     }
-    const trainerLogin = (userData) => {
-        setUser(userData)
-        fetchSpecialities()
-        setTrainerLoggedIn(true)
+
+    const login = (userData) => {
+        setLoggedIn(userData);
     }
+
     const logout = () => {
         setUser({})
         setClientLoggedIn(false)
         setTrainerLoggedIn(false)
     }
+
+    const updateProfile = (url, data) => {
+        fetch(url, {
+            method: "PATCH",
+            body: JSON.stringify(data),
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+        .then((r) => r.json())
+        .then((profile) => {
+            if (!profile.errors) {
+                const updatedUser = { ...user, ...profile }
+                setUser(updatedUser);
+                setErrorList(null);
+            } else {
+                const errors = profile.errors.map((e, index) => (
+                    <li key={index} style={{ color: "red" }}>{e}</li>
+                ));
+                setErrorList(errors)
+            }
+        });
+    };
 
     function isUserInvalid(user) {
         return user.speciality_id === 1 || user.image === null || user.bio === null || user.location === null;
@@ -47,18 +61,14 @@ function UserProvider({ children }) {
             .then(r => r.json())
             .then((userData) => {
                 if (!userData.error) {
-                    setUser(userData)
-                    setClientLoggedIn(true)
-                    fetchSpecialities()
-                    // fetchAvailabilities()
+                    setLoggedIn(userData)
                 }
                 else {
                     fetch('/trainer_me')
                         .then(r => r.json())
                         .then((userData) => {
                             if (!userData.error) {
-                                setUser(userData)
-                                setTrainerLoggedIn(true)
+                                setLoggedIn(userData)
                             }
                         })
                         .catch((error) => {
@@ -84,77 +94,6 @@ function UserProvider({ children }) {
             })
     }
 
-    // function fetchAvailabilities() {
-    //     fetch('/availabilities')
-    //         .then(r => r.json())
-    //         .then(availabilities => {
-    //             if (!availabilities.error) {
-    //                 setAvailabilities(availabilities)
-    //             }
-    //             else {
-    //                 console.log(availabilities.error)
-    //             }
-    //         })
-    // }
-
-    function clientUpdate(client) {
-        fetch('/client_me', {
-            method: "PATCH",
-            body: JSON.stringify(client),
-            headers: {
-                "Content-Type": "application/json",
-            },
-        })
-            .then((r) => r.json())
-            .then((profile) => {
-                if (!profile.errors) {
-                    setUser((prevUser) => ({
-                        ...prevUser,
-                        username: profile.username,
-                        name: profile.name,
-                        email: profile.email,
-                        birthday: profile.birthday,
-                        goals: profile.goals,
-                        image: profile.image,
-                    }))
-                    setErrorList(null)
-                }
-                else {
-                    const errors = profile.errors.map((e, index) => <li key={index} style={{ color: 'red' }}>{e}</li>)
-                    setErrorList(errors)
-                }
-            })
-    }
-    function trainerUpdate(trainer) {
-        fetch('/trainer_me', {
-            method: "PATCH",
-            body: JSON.stringify(trainer),
-            headers: {
-                "Content-Type": "application/json",
-            },
-        })
-            .then((r) => r.json())
-            .then((profile) => {
-                console.log(profile)
-                if (!profile.errors) {
-                    setUser((prevUser) => ({
-                        ...prevUser,
-                        username: profile.username,
-                        name: profile.name,
-                        email: profile.email,
-                        image: profile.image,
-                        bio: profile.bio,
-                        speciality_id: profile.speciality_id,
-                        location: profile.location
-                    }))
-                    setErrorList(null)
-                }
-                else {
-                    const errors = profile.errors.map((e, index) => <li key={index} style={{ color: 'red' }}>{e}</li>)
-                    setErrorList(errors)
-                }
-            })
-    }
     function addSpeciality(speciality) {
         fetch('/specialities', {
             method: 'POST',
@@ -195,7 +134,7 @@ function UserProvider({ children }) {
                     const updatedUserTrainers = user.trainers.some((tr) => tr.id === appointment.trainer.id)
                         ? user.trainers
                         : [...user.trainers, appointment.trainer] 
-                    setUser({ ...user, appointments: updatedUserAppointments, trainers: updatedUserTrainers})
+                    setUser((prevUser) => ({ ...prevUser, appointments: updatedUserAppointments, trainers: updatedUserTrainers}))
                     setErrorList(null)
                 }
                 else {
@@ -230,41 +169,36 @@ function UserProvider({ children }) {
             })
         })
     }
-
-    function clientDeleteAvailability(trainerId, availabilityId, specialityId) {
-        fetch(`/trainers/${trainerId}/availabilities/${availabilityId}`, {
+    
+    function deleteResource(url, resourceId, callback, errorMessage) {
+        fetch(`${url}/${resourceId}`, {
             method: "DELETE",
         })
-            .then(() => frontEndDeleteAvailability(trainerId, availabilityId, specialityId))
-            .catch((error) => {
-                console.error("Error removing availability:", error)
-            })
+        .then(callback)
+        .catch((error) => {
+            console.error(`Error removing ${errorMessage}:`, error)
+        });
+    }
+
+    function clientDeleteAvailability(trainerId, availabilityId, specialityId) {
+        const callback = () => frontEndDeleteAvailability(trainerId, availabilityId, specialityId)
+        deleteResource(`/trainers/${trainerId}/availabilities`, availabilityId, callback, 'availability')
     }
 
     function deleteAppointment(appointmentId) {
-        fetch(`/appointments/${appointmentId}`, {
-            method: "DELETE",
-        })
-        .then(() => {
+        const callback = () => {
             const updatedAppointments = user.appointments.filter((a) => a.id !== appointmentId)
             setUser((prevUser) => ({ ...prevUser, appointments: updatedAppointments }))
-        })
-        .catch((error) => {
-            console.error("Error removing appointment:", error)
-        })
+        }
+        deleteResource("/appointments", appointmentId, callback, 'appointment')
     }
 
     function deleteAvailability(availabilityId) {
-        fetch(`/availabilities/${availabilityId}`, {
-            method: 'DELETE',
-        })
-        .then(() => {
+        const callback = () => {
             const updatedAvailabilities = user.availabilities.filter((a) => a.id !== availabilityId)
-            setUser((prevUser) => ({...prevUser, availabilities: updatedAvailabilities}))
-        })
-        .catch((error) => {
-            console.error("Error removing availability:", error)
-        })
+            setUser((prevUser) => ({ ...prevUser, availabilities: updatedAvailabilities }))
+        };
+        deleteResource("/availabilities", availabilityId, callback, 'availability')
     }
     
     function editAvailability(availabilityId, availability){
@@ -279,7 +213,8 @@ function UserProvider({ children }) {
         .then((updatedAvailability) => {
             if(!updatedAvailability.errors) {
                 if (!updatedAvailability.error) {
-                    frontEndEditAvailability(updatedAvailability, availabilityId)
+                    const updatedAvailabilities = user.availabilities.map((a) => (a.id === availabilityId ? updatedAvailability : a));
+                    setUser((prevUser) => ({ ...prevUser, availabilities: updatedAvailabilities }))
                     setErrorList(null)
                 }
                 else {
@@ -294,16 +229,6 @@ function UserProvider({ children }) {
                 setErrorList(errors)
             }
         })
-    }
-
-    function frontEndEditAvailability(updatedAvailability, availabilityId) {
-        const updatedAvailabilities = user.availabilities.map((a) => {
-            if (a.id === availabilityId) {
-                return updatedAvailability
-            }
-            return a
-        })
-        setUser((prevUser) => ({...prevUser, availabilities: updatedAvailabilities}))
     }
 
     function addAvailability(newAvailabilty){
@@ -328,7 +253,7 @@ function UserProvider({ children }) {
     }
 
     return (
-        <UserContext.Provider value={{ user, clientLoggedIn, trainerLoggedIn, clientLogin, trainerLogin, clientSignup, trainerSignup, logout, specialities, addSpeciality, clientUpdate, trainerUpdate, addAppointment, clientDeleteAvailability, deleteAppointment, deleteAvailability, editAvailability, addAvailability, errorList, isUserInvalid }}>
+        <UserContext.Provider value={{ user, login, signup, clientLoggedIn, trainerLoggedIn, logout, updateProfile, specialities, addSpeciality, addAppointment, clientDeleteAvailability, deleteAppointment, deleteAvailability, editAvailability, addAvailability, errorList, isUserInvalid }}>
             {children}
         </UserContext.Provider>
     )
