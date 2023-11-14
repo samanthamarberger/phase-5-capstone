@@ -26,7 +26,7 @@ function AddAvailability({ selectedDate, onClose }) {
                     value={start}
                     onChange={(e)=>{setStart(e.target.value)}}
                 />
-                <br />
+                <br /><br />
                 <label>End Time:</label>
                 <input
                     className="end"
@@ -34,7 +34,9 @@ function AddAvailability({ selectedDate, onClose }) {
                     value={end}
                     onChange={(e)=>{setEnd(e.target.value)}}
                 />
+                <br /><br />
                 <button type="submit">Save</button>
+                <button onClick={onClose}>Close</button>
             </form>
         </div>
     )

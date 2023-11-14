@@ -28,7 +28,7 @@ function TrainerAvailabilities() {
         color: 'green',
         trainer_id: user.id,
         availability_id: a.id,
-        location: a.location
+        location: a.location,
     }))
 
     function calculateDuration(start, end) {
@@ -93,7 +93,7 @@ function TrainerAvailabilities() {
                     <p>Title: {selectedAvailability?.title}</p>
                     <p>Start: {selectedAvailability?.start?.toLocaleString()}</p>
                     <p>End: {selectedAvailability?.end?.toLocaleString()}</p>
-                    <p>Location: {selectedAvailability?.extendedProps.location}</p>
+                    <p>Location: {selectedAvailability?.extendedProps?.location ? selectedAvailability?.extendedProps.location : " "}</p>
 
                     <button onClick={handleEditAvailability}>Edit</button>
                     <button onClick={handleDeleteAvailability}>Delete</button>
