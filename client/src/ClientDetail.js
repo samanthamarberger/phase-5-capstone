@@ -3,7 +3,7 @@ import { UserContext } from "./context/user";
 import ClientEdit from "./ClientEdit";
 
 function ClientDetail() {
-    const { user, errorList } = useContext(UserContext)
+    const { user } = useContext(UserContext)
     const [editForm, setEditForm] = useState(false)
 
     function canEdit() {
@@ -20,7 +20,6 @@ function ClientDetail() {
     return (
         <div className="Profile">
             <p>Current Goal: {user.goals}</p>
-            {errorList}
             {canEdit()}
         </div>
     )
