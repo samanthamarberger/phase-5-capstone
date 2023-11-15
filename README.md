@@ -62,3 +62,8 @@ My application utilizes Authorization and Authentication to secure the user data
 
 My application also uses FullCalendar which is a JavaScript library that allows me to visualize appointment and availability dates and times for the users convenience. FullCalendar allows for east schelduling, editing, and canceling of appointments. 
 
+<!-- 
+    in trainers:
+        contact clients - the “email:” should not be a part of the hyperlink
+    in client:
+-->

@@ -5,7 +5,7 @@ import TrainerDetail from "./TrainerDetail";
 import NameLink from "./NameLink";
 
 function Profile() {
-    const { user, clientLoggedIn, trainerLoggedIn } = useContext(UserContext)
+    const { user, clientLoggedIn, trainerLoggedIn, errorList } = useContext(UserContext)
 
     const nameLink = (
         clientLoggedIn 
@@ -17,6 +17,7 @@ function Profile() {
             <div className="Profile">
                 <h1>{user.name}'s Profile</h1>
                 <img className="profile-picture" src={user.image} alt={user.name}/>
+                {errorList}
                 <h2>{user.name}</h2>
                 <p>{user.email}</p>
                 {clientLoggedIn ? <ClientDetail/> : <TrainerDetail/>}

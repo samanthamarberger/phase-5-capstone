@@ -35,7 +35,10 @@ function Trainers() {
         return (
             <div className="Trainers">
                 <h1>Trainers for {speciality.name}: </h1>
-                {trainers}
+                {trainers.length === 0 ? 
+                    <h2>There are currently no trainers available</h2> : 
+                    trainers
+                }
             </div>
         );
     }

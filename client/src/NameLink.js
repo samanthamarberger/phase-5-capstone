@@ -5,7 +5,7 @@ function NameLink({ name }) {
 
     return (
         <Link to={emailLink}>
-            <p>Email: {name.email}</p>
+            <p>{name.name}</p>
         </Link>
     )
 }

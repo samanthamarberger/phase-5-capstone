@@ -56,7 +56,7 @@ function ClientEdit({ setEditForm }) {
                     /> <br/>
                     <label>Change Birthday:</label>
                     <input 
-                        type="text"
+                        type="date"
                         id="birthday"
                         value={tempBirthday}
                         onChange={(e) => setTempBirthday(e.target.value)}

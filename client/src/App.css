@@ -111,6 +111,28 @@ input[type=text], select, textarea {
   resize: vertical;
 }
 
+input[type="date"] {
+  width: 400px; 
+  padding: 12px; 
+  border: 1px solid #ccc; 
+  border-radius: 4px; 
+  box-sizing: content-box; 
+  margin-top: 6px;
+  margin-bottom: 16px; 
+  resize: vertical;
+}
+
+input[type="datetime-local"] {
+  width: 400px; 
+  padding: 12px; 
+  border: 1px solid #ccc; 
+  border-radius: 4px; 
+  box-sizing: content-box; 
+  margin-top: 6px;
+  margin-bottom: 16px; 
+  resize: vertical;
+}
+
 label {
   color: #B4886B;
   font-weight: bold;

@@ -115,6 +115,7 @@ function TrainerAvailabilities() {
                     />
                 )}
                 <br />
+                <p>Click on a date to add a new availability!</p>
                 <Calendar
                     plugins={[dayGridPlugin]}
                     events={availabilities}
