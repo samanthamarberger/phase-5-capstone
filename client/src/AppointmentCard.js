@@ -14,6 +14,7 @@ function AppointmentCard({ appointment, onClose }) {
     function handleDialogResponse(confirm) {
         if (confirm) {
             deleteAppointment(parseInt(appointment.id, 10))
+            onClose()
         }
         setDialogVisible(false)
     }

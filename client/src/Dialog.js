@@ -16,7 +16,7 @@ function Dialog({ message, onDialog, onCancel}) {
                     <button 
                     onClick={()=>onDialog(true)}
                         style={{
-                            background:"red", 
+                            background:"green", 
                             color:"white", 
                             padding:"10px", 
                             marginRight: "4px",
@@ -29,7 +29,7 @@ function Dialog({ message, onDialog, onCancel}) {
                     <button 
                     onClick={()=>onCancel()}
                         style={{
-                            background:"green", 
+                            background:"red", 
                             color:"white", 
                             padding:"10px", 
                             marginLeft: "4px",
