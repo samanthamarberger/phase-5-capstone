@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate  } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 
 const UserContext = React.createContext();
@@ -32,15 +32,15 @@ function UserProvider({ children }) {
         setTrainerLoggedIn(false)
     }
 
-      useEffect(() => {
-        const handleNavigation = () => {
-          setErrorList(null)
+    useEffect(() => {
+        const handleClick = () => {
+            setErrorList(null)
         }
-        document.addEventListener('click', handleNavigation);
+        document.addEventListener('click', handleClick);
         return () => {
-          document.removeEventListener('click', handleNavigation);
+            document.removeEventListener('click', handleClick);
         }
-      }, [])
+    }, [])
 
     const updateProfile = (url, data) => {
         fetch(url, {
@@ -50,19 +50,19 @@ function UserProvider({ children }) {
                 "Content-Type": "application/json",
             },
         })
-        .then((r) => r.json())
-        .then((profile) => {
-            if (!profile.errors) {
-                const updatedUser = { ...user, ...profile }
-                setUser(updatedUser);
-                setErrorList(null);
-            } else {
-                const errors = profile.errors.map((e, index) => (
-                    <li key={index} style={{ color: "red" }}>{e}</li>
-                ));
-                setErrorList(errors)
-            }
-        })
+            .then((r) => r.json())
+            .then((profile) => {
+                if (!profile.errors) {
+                    const updatedUser = { ...user, ...profile }
+                    setUser(updatedUser);
+                    setErrorList(null);
+                } else {
+                    const errors = profile.errors.map((e, index) => (
+                        <li key={index} style={{ color: "red" }}>{e}</li>
+                    ));
+                    setErrorList(errors)
+                }
+            })
     }
 
     function isUserInvalid(user) {
@@ -146,8 +146,8 @@ function UserProvider({ children }) {
                     const updatedUserAppointments = [...user.appointments, appointment]
                     const updatedUserTrainers = user.trainers.some((tr) => tr.id === appointment.trainer.id)
                         ? user.trainers
-                        : [...user.trainers, appointment.trainer] 
-                    setUser((prevUser) => ({ ...prevUser, appointments: updatedUserAppointments, trainers: updatedUserTrainers}))
+                        : [...user.trainers, appointment.trainer]
+                    setUser((prevUser) => ({ ...prevUser, appointments: updatedUserAppointments, trainers: updatedUserTrainers }))
                     setErrorList(null)
                 }
                 else {
@@ -182,15 +182,15 @@ function UserProvider({ children }) {
             })
         })
     }
-    
+
     function deleteResource(url, resourceId, callback, errorMessage) {
         fetch(`${url}/${resourceId}`, {
             method: "DELETE",
         })
-        .then(callback)
-        .catch((error) => {
-            console.error(`Error removing ${errorMessage}:`, error)
-        });
+            .then(callback)
+            .catch((error) => {
+                console.error(`Error removing ${errorMessage}:`, error)
+            });
     }
 
     function clientDeleteAvailability(trainerId, availabilityId, specialityId) {
@@ -213,56 +213,56 @@ function UserProvider({ children }) {
         };
         deleteResource("/availabilities", availabilityId, callback, 'availability')
     }
-    
-    function editAvailability(availabilityId, availability){
+
+    function editAvailability(availabilityId, availability) {
         fetch(`/availabilities/${availabilityId}`, {
             method: 'PATCH',
             body: JSON.stringify(availability),
             headers: {
-                'Content-Type':'application/json',
+                'Content-Type': 'application/json',
             },
         })
-        .then((r) => r.json())
-        .then((updatedAvailability) => {
-            if(!updatedAvailability.errors) {
-                if (!updatedAvailability.error) {
-                    const updatedAvailabilities = user.availabilities.map((a) => (a.id === availabilityId ? updatedAvailability : a));
-                    setUser((prevUser) => ({ ...prevUser, availabilities: updatedAvailabilities }))
-                    setErrorList(null)
+            .then((r) => r.json())
+            .then((updatedAvailability) => {
+                if (!updatedAvailability.errors) {
+                    if (!updatedAvailability.error) {
+                        const updatedAvailabilities = user.availabilities.map((a) => (a.id === availabilityId ? updatedAvailability : a));
+                        setUser((prevUser) => ({ ...prevUser, availabilities: updatedAvailabilities }))
+                        setErrorList(null)
+                    }
+                    else {
+                        const error = <li style={{ color: 'red' }}>{updatedAvailability.error}</li>
+                        setErrorList([error])
+                    }
                 }
                 else {
-                    const error = <li style={{ color: 'red' }}>{updatedAvailability.error}</li>
-                    setErrorList([error])
+                    const errors = updatedAvailability.errors.map((error, index) => (
+                        <li key={index} style={{ color: 'red' }}>{error}</li>
+                    ))
+                    setErrorList(errors)
                 }
-            }
-            else {
-                const errors = updatedAvailability.errors.map((error, index) => (
-                    <li key={index} style={{ color: 'red' }}>{error}</li>
-                ))
-                setErrorList(errors)
-            }
-        })
+            })
     }
 
-    function addAvailability(newAvailabilty){
+    function addAvailability(newAvailabilty) {
         fetch(`/availabilities`, {
             method: 'POST',
             headers: {
-                'Content-Type':'application/json',
+                'Content-Type': 'application/json',
             },
             body: JSON.stringify(newAvailabilty),
         })
-        .then((r) => r.json())
-        .then((newAvailabilty) => {
-            if(!newAvailabilty.errors){
-                const newAvailabilities = [...user.availabilities, newAvailabilty]
-                setUser((prevUser) => ({...prevUser, availabilities: newAvailabilities}))
-            }
-            else {
-                const errorLis = newAvailabilty.errors.map((e, index) => <li key={index} style={{ color: 'red'}}>{e}</li>)
-                setErrorList(errorLis)
-            }
-        })
+            .then((r) => r.json())
+            .then((newAvailabilty) => {
+                if (!newAvailabilty.errors) {
+                    const newAvailabilities = [...user.availabilities, newAvailabilty]
+                    setUser((prevUser) => ({ ...prevUser, availabilities: newAvailabilities }))
+                }
+                else {
+                    const errorLis = newAvailabilty.errors.map((e, index) => <li key={index} style={{ color: 'red' }}>{e}</li>)
+                    setErrorList(errorLis)
+                }
+            })
     }
 
     return (
