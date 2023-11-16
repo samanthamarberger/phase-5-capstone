@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate  } from 'react-router-dom';
+
 
 const UserContext = React.createContext();
 
@@ -8,6 +10,7 @@ function UserProvider({ children }) {
     const [trainerLoggedIn, setTrainerLoggedIn] = useState(false)
     const [specialities, setSpecialities] = useState([])
     const [errorList, setErrorList] = useState([])
+    const navigate = useNavigate()
 
     const setLoggedIn = (userData) => {
         setUser(userData)
@@ -29,6 +32,16 @@ function UserProvider({ children }) {
         setTrainerLoggedIn(false)
     }
 
+      useEffect(() => {
+        const handleNavigation = () => {
+          setErrorList(null)
+        }
+        document.addEventListener('click', handleNavigation);
+        return () => {
+          document.removeEventListener('click', handleNavigation);
+        }
+      }, [])
+
     const updateProfile = (url, data) => {
         fetch(url, {
             method: "PATCH",
@@ -49,14 +62,12 @@ function UserProvider({ children }) {
                 ));
                 setErrorList(errors)
             }
-        });
-    };
-
-    function isUserInvalid(user) {
-        return user.speciality_id === 1 || user.image === null || user.bio === null || user.location === null;
+        })
     }
 
-   
+    function isUserInvalid(user) {
+        return user.speciality_id === 1 || user.image === null || user.bio === null || user.location === null
+    }
 
     useEffect(() => {
         fetch('/client_me')
