@@ -66,4 +66,5 @@ My application also uses FullCalendar which is a JavaScript library that allows 
     in trainers:
         contact clients - the “email:” should not be a part of the hyperlink
     in client:
+    Clean up error list
 -->

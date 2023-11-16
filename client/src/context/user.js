@@ -56,6 +56,8 @@ function UserProvider({ children }) {
         return user.speciality_id === 1 || user.image === null || user.bio === null || user.location === null;
     }
 
+   
+
     useEffect(() => {
         fetch('/client_me')
             .then(r => r.json())

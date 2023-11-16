@@ -4,9 +4,12 @@ function NameLink({ name }) {
     const emailLink = `mailto:${name.email}`
 
     return (
-        <Link to={emailLink}>
-            <p>{name.name}</p>
-        </Link>
+        <p>
+            Email: 
+            <Link to={emailLink}>
+                {name.name}
+            </Link>
+        </p>
     )
 }
 
